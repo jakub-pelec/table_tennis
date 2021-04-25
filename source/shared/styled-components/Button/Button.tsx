@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import {AppRegistry, StyleSheet, TouchableWithoutFeedback, TouchableWithoutFeedbackProps} from 'react-native';
+import {AppRegistry, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native';
 
 interface IProps {
     children: JSX.Element
 };
 
-const Button: FC<IProps & TouchableWithoutFeedbackProps> = ({children}) => {
-    return <TouchableWithoutFeedback style={styles.default}>{children}</TouchableWithoutFeedback>
+const Button: FC<IProps & TouchableOpacityProps> = (props) => {
+    return <TouchableOpacity onPress={props.onPress} style={styles.default}>{props.children}</TouchableOpacity>
 }
 
 const styles = StyleSheet.create({
