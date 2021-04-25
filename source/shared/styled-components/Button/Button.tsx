@@ -6,7 +6,7 @@ interface IProps {
 };
 
 const Button: FC<IProps & TouchableOpacityProps> = (props) => {
-    return <TouchableOpacity onPress={props.onPress} style={styles.default}>{props.children}</TouchableOpacity>
+    return <TouchableOpacity {...props} style={styles.default}>{props.children}</TouchableOpacity>
 }
 
 const styles = StyleSheet.create({

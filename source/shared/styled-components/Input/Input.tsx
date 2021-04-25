@@ -5,7 +5,7 @@ interface IProps {}
 
 const Input: FC<IProps & TextInputProps> = (props) => {
     return (
-        <TextInput style={styles.default} />
+        <TextInput {...props} style={styles.default} />
     )
 }
 
