@@ -1,13 +1,16 @@
 import React, { FC } from 'react';
-import {View, AppRegistry} from 'react-native';
+import { View, AppRegistry } from 'react-native';
 import Text from './source/shared/styled-components/Text/export';
 import Button from './source/shared/styled-components/Button/Button';
+import Input from './source/shared/styled-components/Input/Input';
+import LoginPage from './source/components/LoginPage/LoginPage';
 
-interface IProps {};
+interface IProps { };
 
 const App: FC<IProps> = (props) => {
-  return(
+  return (
     <View>
+      <LoginPage />
       <Text.Header text={'Hello world!'} />
     </View>
   )

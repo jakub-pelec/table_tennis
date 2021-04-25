@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {AppRegistry, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import React, { FC } from 'react';
+import { AppRegistry, StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 interface IProps {
     children: JSX.Element
