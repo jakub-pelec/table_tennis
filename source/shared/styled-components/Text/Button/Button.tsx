@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import {AppRegistry, StyleSheet, Text} from 'react-native';
+import {AppRegistry, StyleSheet, Text, TextProps} from 'react-native';
 
 interface IProps {
     text: string
 };
 
-const Button: FC<IProps> = ({text}) => {
+const Button: FC<IProps & TextProps> = ({text}) => {
     return <Text style={styles.default}>{text}</Text>
 };
 
