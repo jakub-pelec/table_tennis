@@ -11,11 +11,12 @@ const Input: FC<IProps & TextInputProps> = (props) => {
 
 const styles = StyleSheet.create({
     default: {
+        paddingLeft: '10%',
         marginTop: 30,
         fontSize: 16,
         width: '75%',
-        height: 59,
-        borderWidth: 4,
+        height: 51,
+        borderWidth: 2,
         borderColor: '#F8EDEB',
         borderStyle: 'solid',
         borderRadius: 5,

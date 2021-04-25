@@ -11,10 +11,7 @@ interface IProps { };
 const App: FC<IProps> = (props) => {
   return (
     <Provider store={store}>
-      <View>
-        <LoginPage />
-        <Text.Header text={'Hello world!'} />
-      </View>
+      <LoginPage />
     </Provider>
   )
 }
