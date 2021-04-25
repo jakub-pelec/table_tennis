@@ -6,7 +6,7 @@ interface IProps {
 };
 
 const Header: FC<IProps & TextProps> = (props) => {
-    return <Text style={props.style}>{props.text}</Text>
+    return <Text {...props} style={styles.default}>{props.text}</Text>
 }
 
 const styles = StyleSheet.create({

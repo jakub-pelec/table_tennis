@@ -5,15 +5,20 @@ interface IProps { }
 
 const Input: FC<IProps & TextInputProps> = (props) => {
     return (
-        <TextInput {...props} style={props.style} />
+        <TextInput {...props} style={styles.default} />
     )
 }
 
 const styles = StyleSheet.create({
     default: {
-        // width: '50%',
-        // height: '50%',
-        backgroundColor: 'red',
+        marginTop: 30,
+        fontSize: 16,
+        width: '75%',
+        height: 59,
+        borderWidth: 4,
+        borderColor: '#F8EDEB',
+        borderStyle: 'solid',
+        borderRadius: 5,
     }
 });
 
