@@ -1,15 +1,18 @@
 import React, { FC } from 'react';
-import {View, AppRegistry} from 'react-native';
+import { View, AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './store';
 import Text from './source/shared/styled-components/Text/export';
-import Button from './source/shared/styled-components/Button/Button';
 
-interface IProps {};
+interface IProps { };
 
 const App: FC<IProps> = (props) => {
-  return(
-    <View>
-      <Text.Header text={'Hello world!'} />
-    </View>
+  return (
+    <Provider store={store}>
+      <View>
+        <Text.Header text={'Hello world!'} />
+      </View>
+    </Provider>
   )
 }
 
