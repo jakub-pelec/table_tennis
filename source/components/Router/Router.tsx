@@ -9,7 +9,7 @@ const Router: FC<IProps> = () => {
     return(
         <NativeRouter>
             <Switch>
-                <Route path='/' component={LoginPage} />
+                <Route path='/' exact component={LoginPage} />
             </Switch>
         </NativeRouter>
     )
