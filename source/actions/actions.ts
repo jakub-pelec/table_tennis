@@ -9,12 +9,14 @@ import { COLLECTIONS } from '../constants/collections';
 interface ICreateAccountParams {
     email: string,
     password: string,
-    username: string
+    username: string,
+    callback: () => void
 }
 
 interface ISignInParams {
     email: string,
-    password: string
+    password: string,
+    callback: () => void
 }
 
 interface ISubscribeUserData {
@@ -22,26 +24,28 @@ interface ISubscribeUserData {
     dispatch: Dispatch
 }
 
-export const createAccount = ({email, password, username}: ICreateAccountParams) => async(dispatch: Dispatch) => {
+export const createAccount = ({email, password, username, callback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
         const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username});
         if(response.status === 200) {
             const firestoreID = response.data.firestoreID;
             dispatch({type: SIGN_IN, payload: firestoreID});
             subscribeUserData({id: firestoreID, dispatch});
+            callback();
         }
     } catch(e) {
         console.log(e);
     }
 }
 
-export const signIn = ({email, password}: ISignInParams) => async(dispatch: Dispatch) => {
+export const signIn = ({email, password, callback}: ISignInParams) => async(dispatch: Dispatch) => {
     try {
         await auth.signInWithEmailAndPassword(email, password);
         const token = await auth.currentUser?.getIdTokenResult();
         const firestoreID = token?.claims.firestoreID;
         dispatch({type: SIGN_IN, payload: firestoreID});
         subscribeUserData({id: firestoreID, dispatch});
+        callback();
     } catch(e) {
         console.log(e);
     }
