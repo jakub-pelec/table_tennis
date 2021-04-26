@@ -69,14 +69,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 0,
     },
-    firstLoginView: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: Dimensions.get("window").height,
-        width: Dimensions.get("window").width,
-        backgroundColor: '#F8F1F1',
-    },
     keyboardAvoidingViewStyle: {
         flex: 1,
         display: 'flex',
@@ -88,6 +80,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         width: '75%',
         justifyContent: 'center',
+        alignContent: 'center',
         flexDirection: 'row',
         marginTop: '10%',
         marginBottom: '10%',
