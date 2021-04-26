@@ -7,17 +7,13 @@ import Text from '../../shared/styled-components/Text/export';
 import icons from '../../assets/export';
 
 
-interface IProps {
-
-};
+interface IProps {};
 
 const LoginPage: FC<IProps> = () => {
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
-
             <KeyboardAvoidingView
-
                 style={styles.keyboardAvoidingViewStyle}
                 behavior='height'
             >
@@ -39,7 +35,6 @@ const LoginPage: FC<IProps> = () => {
                         <Text.Paragraph text={"keep me logged in"}></Text.Paragraph>
                         <CheckBox style={styles.signIcons}></CheckBox>
                     </View>
-
                     <View style={styles.ButtonsContainer}>
                         <View style={styles.signInButtonContainer}>
                             <Button variant={'primary'} onPress={() => console.log("sign in clicked")}><Text.Button variant={'primary'} text={"sign in"} /></Button>
