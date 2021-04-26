@@ -1,0 +1,8 @@
+POST http://localhost:5001/table-tennis-204a5/us-central1/api/v1/create_account HTTP/1.1
+content-type: application/json
+
+{
+   "email": "kuba1pelec@gmail.com",
+   "password": "123456",
+   "username": "aaa"
+}

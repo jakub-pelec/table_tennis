@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     default: {
         fontSize: 16,
         color: '#6F6F6F',
+        fontFamily: 'Baloo2-Bold'
     }
 });
 
