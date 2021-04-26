@@ -6,7 +6,7 @@ import Text from './source/shared/styled-components/Text/export';
 import LoginPage from './source/components/LoginPage/LoginPage';
 
 
-interface IProps { };
+interface IProps {};
 
 const App: FC<IProps> = (props) => {
   return (
