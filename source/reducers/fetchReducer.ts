@@ -1,16 +1,21 @@
-import {SIGN_IN, SIGN_OUT} from '../actions/types';
+import {SUBSCRIBE, UNSUBSCRIBE} from '../actions/types';
 import { ActionWithPayload } from '../typings/redux';
 
+const initialTitles: string[] = [];
+
 export const INITIAL_STATE = {
-    isAuthenticated: false,
-    id: ''
+    username: '',
+    wins: 0,
+    loses: 0,
+    titles: initialTitles,
+    duringGame: false
 }
 
 export default (state = INITIAL_STATE, action: ActionWithPayload<any>): typeof INITIAL_STATE => {
     switch(action.type) {
-        case SIGN_IN:
-            return {...state, isAuthenticated: true, id: action.payload};
-        case SIGN_OUT:
+        case SUBSCRIBE:
+            return {...state, ...action.payload};
+        case UNSUBSCRIBE:
             return INITIAL_STATE;
         default:
             return state;
