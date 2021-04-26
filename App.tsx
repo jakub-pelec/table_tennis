@@ -3,15 +3,15 @@ import { View, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './store';
 import Text from './source/shared/styled-components/Text/export';
+import LoginPage from './source/components/LoginPage/LoginPage';
+
 
 interface IProps {};
 
 const App: FC<IProps> = (props) => {
   return (
     <Provider store={store}>
-      <View>
-        <Text.Header text={'Hello world!'} />
-      </View>
+      <LoginPage />
     </Provider>
   )
 }

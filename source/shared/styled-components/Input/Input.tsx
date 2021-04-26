@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
-import {TextInput, AppRegistry, StyleSheet, TextInputProps} from 'react-native';
+import React, { FC } from 'react';
+import { TextInput, AppRegistry, StyleSheet, TextInputProps } from 'react-native';
 
-interface IProps {}
+interface IProps { }
 
 const Input: FC<IProps & TextInputProps> = (props) => {
     return (
@@ -10,7 +10,16 @@ const Input: FC<IProps & TextInputProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
-    default: {}
+    default: {
+        paddingLeft: '10%',
+        marginTop: 30,
+        fontSize: 16,
+        width: '75%',
+        height: 51,
+        borderBottomWidth: 1,
+        borderColor: '#000000',
+        borderStyle: 'solid',
+    }
 });
 
 AppRegistry.registerComponent('input', () => Input);

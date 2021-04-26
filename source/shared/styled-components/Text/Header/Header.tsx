@@ -1,17 +1,19 @@
 import React, { FC } from 'react';
-import {AppRegistry, StyleSheet, Text, TextProps} from 'react-native';
+import { AppRegistry, StyleSheet, Text, TextProps } from 'react-native';
 
 interface IProps {
     text: string
 };
 
-const Header: FC<IProps & TextProps> = ({text}) => {
-    return <Text style={styles.default}>{text}</Text>
+const Header: FC<IProps & TextProps> = (props) => {
+    return <Text {...props} style={styles.default}>{props.text}</Text>
 }
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 12
+        fontSize: 24,
+        fontFamily: 'Baloo2-Bold',
+        color: '#4D375D'
     }
 });
 
