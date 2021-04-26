@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: '75%',
         height: 51,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderColor: '#000000',
         borderStyle: 'solid',
     }

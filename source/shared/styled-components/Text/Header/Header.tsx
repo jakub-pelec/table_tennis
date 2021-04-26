@@ -11,7 +11,9 @@ const Header: FC<IProps & TextProps> = (props) => {
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 12
+        fontSize: 24,
+        fontFamily: 'Baloo2-Bold',
+        color: '#4D375D'
     }
 });
 

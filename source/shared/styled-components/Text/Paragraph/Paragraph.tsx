@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const Paragraph: FC<IProps> = (props) => {
-    return <Text style={styles.default}>{props.text}</Text>
+    return <Text style={styles.default}>{props.text}{props.children}</Text>
 };
 
 AppRegistry.registerComponent('paragraph', () => Paragraph);
@@ -15,7 +15,7 @@ AppRegistry.registerComponent('paragraph', () => Paragraph);
 const styles = StyleSheet.create({
     default: {
         fontSize: 16,
-        color: '#6F6F6F',
+        color: '#4D375D',
         fontFamily: 'Baloo2-Bold'
     }
 });
