@@ -7,9 +7,11 @@ import Text from '../../shared/styled-components/Text/export';
 import icons from '../../assets/export';
 
 
-interface IProps {};
+interface IProps {
+    history: any
+};
 
-const LoginPage: FC<IProps> = () => {
+const LoginPage: FC<IProps> = (props) => {
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
@@ -39,7 +41,7 @@ const LoginPage: FC<IProps> = () => {
                         <View style={styles.signInButtonContainer}>
                             <Button variant={'primary'} onPress={() => console.log("sign in clicked")}><Text.Button variant={'primary'} text={"sign in"} /></Button>
                         </View>
-                        <Button variant={'secondary'} onPress={() => console.log("register clicked")}><Text.Header text={"register"} /></Button>
+                        <Button variant={'secondary'} onPress={() => props.history.push("/register")}><Text.Header text={"register"} /></Button>
                         <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
                         <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
                     </View>
