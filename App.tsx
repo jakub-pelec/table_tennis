@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Text from './source/shared/styled-components/Text/export';
 
-interface IProps { };
+interface IProps {};
 
 const App: FC<IProps> = (props) => {
   return (

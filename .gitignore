@@ -60,3 +60,4 @@ buck-out/
 
 # firebase
 source/env/firebaseConfig.ts
+*.rest
