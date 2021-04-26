@@ -51,7 +51,6 @@ const subscribeUserData = ({id, dispatch}: ISubscribeUserData) => {
     const unsubscribe = firestore.collection(COLLECTIONS.USERS).doc(id).onSnapshot(snapshot => {
         if(snapshot.exists) {
             const data = snapshot.data();
-            console.log(data);
             dispatch({type: SUBSCRIBE, payload: data});
         }
     });
