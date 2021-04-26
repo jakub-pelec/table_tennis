@@ -16,10 +16,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: '75%',
         height: 51,
-        borderWidth: 2,
-        borderColor: '#F8EDEB',
+        borderBottomWidth: 2,
+        borderColor: '#000000',
         borderStyle: 'solid',
-        borderRadius: 5,
     }
 });
 
