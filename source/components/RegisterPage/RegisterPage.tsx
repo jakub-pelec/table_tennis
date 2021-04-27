@@ -33,7 +33,13 @@ const RegisterPage: FC<IProps> = (props) => {
     }
 
     const validate = (state: IFormState) => {
-        // TODO: Validate form fields
+        /*
+            TODO: Validate fields, acceptance criteria:
+                - password must have atleast 6 characters
+                - username must have less than 32 characters
+                - email must be a valid email
+                - password and rePassword must match
+        */
         const {password, rePassword, email, username} = state;
         if(password && rePassword && email && username) {
             if(password === rePassword) {
@@ -45,7 +51,13 @@ const RegisterPage: FC<IProps> = (props) => {
     }
 
     const handleSubmit = () => {
-        // TODO: Handle backend rejection and failed validation
+        /*
+            TODO: Handle backend rejection and failed validation, acceptance criteria:
+                - backend:
+                    - any error (server error)
+                - validation:
+                    - visual feedback for user
+        */
         if(validate(data)) {
             const callback = () => props.history.push('/dashboard');
             const {email, password, username} = data;

@@ -30,13 +30,25 @@ const LoginPage: FC<IProps> = (props) => {
     }
 
     const validate = (state: IFormState) => {
-        // TODO: Validate fields
+        /*
+            TODO: Validate fields, acceptance criteria:
+                    - email must be a valid email
+        */
         const {email, password} = state;
         return email && password;
     }
 
     const handleSignIn = () => {
-        // TODO: Handle backend rejection and wrong validation
+        /*
+            TODO: Handle failed validation and backend rejection, acceptance criteria:
+                - backend:
+                    - wrong password
+                    - non-existent email
+                    - too many request (spam prevention)
+                    - other (server issue)
+                - validation:
+                    - visual feedback for user
+        */
         if(validate(data)) {
             const callback = () => props.history.push('/dashboard');
             return props.signIn({...data, callback});
