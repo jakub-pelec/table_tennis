@@ -4,11 +4,11 @@ import Input from '../../shared/styled-components/Input/Input';
 import icons from '../../assets/export';
 import Button from '../../shared/styled-components/Button/Button';
 import Text from '../../shared/styled-components/Text/export';
+import { RouteComponentProps } from 'react-router';
 
 
 
-interface IProps {
-    history: any
+interface IProps extends RouteComponentProps {
 }
 
 const RegisterPage: FC<IProps> = (props) => {
@@ -20,14 +20,7 @@ const RegisterPage: FC<IProps> = (props) => {
                 alignItems: 'center',
                 height: Dimensions.get('window').height - 50,
             }}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                }}
-            >
-
-
+                style={styles.scrollViewStyle}>
                 <View style={[styles.flexCentered, styles.inputContainer]}>
                     <View style={{ width: '25%' }}>
                         <Button variant={'secondary'} onPress={() => props.history.push("/")}><Text.Paragraph text={"go back"} /></Button>
@@ -52,6 +45,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
+    },
+    scrollViewStyle: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
     },
     signIcons: {
         position: 'absolute',

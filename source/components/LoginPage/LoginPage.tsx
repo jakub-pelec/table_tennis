@@ -5,10 +5,10 @@ import Button from '../../shared/styled-components/Button/Button';
 import Input from '../../shared/styled-components/Input/Input';
 import Text from '../../shared/styled-components/Text/export';
 import icons from '../../assets/export';
+import { RouteComponentProps } from 'react-router';
 
 
-interface IProps {
-    history: any
+interface IProps extends RouteComponentProps {
 };
 
 const LoginPage: FC<IProps> = (props) => {
@@ -19,31 +19,28 @@ const LoginPage: FC<IProps> = (props) => {
                 style={styles.keyboardAvoidingViewStyle}
                 behavior='height'
             >
-                <ScrollView centerContent style={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                }}
+                <ScrollView centerContent style={styles.scrollViewStyle}
                     contentContainerStyle={{
                         justifyContent: 'center',
                         alignItems: 'center',
                         height: Dimensions.get('window').height - 50,
-                    }}
-                >
-                    <Image source={icons.logo} />
-                    <Input placeholder={"Username"} />
-                    <Input placeholder={"Password"} secureTextEntry />
-                    <View style={styles.checkboxContainer}>
-                        <Text.Paragraph text={"keep me logged in"}></Text.Paragraph>
-                        <CheckBox style={styles.signIcons}></CheckBox>
-                    </View>
-                    <View style={styles.ButtonsContainer}>
-                        <View style={styles.signInButtonContainer}>
-                            <Button variant={'primary'} onPress={() => console.log("sign in clicked")}><Text.Button variant={'primary'} text={"sign in"} /></Button>
+                    }}>
+                    <View style={styles.mainContainer}>
+                        <Image source={icons.logo} />
+                        <Input placeholder={"Username"} />
+                        <Input placeholder={"Password"} secureTextEntry />
+                        <View style={styles.checkboxContainer}>
+                            <Text.Paragraph text={"keep me logged in"}></Text.Paragraph>
+                            <CheckBox style={styles.signIcons}></CheckBox>
                         </View>
-                        <Button variant={'secondary'} onPress={() => props.history.push("/register")}><Text.Header text={"register"} /></Button>
-                        <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
-                        <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
+                        <View style={styles.ButtonsContainer}>
+                            <View style={styles.signInButtonContainer}>
+                                <Button variant={'primary'} onPress={() => console.log("sign in clicked")}><Text.Button variant={'primary'} text={"sign in"} /></Button>
+                            </View>
+                            <Button variant={'secondary'} onPress={() => props.history.push("/register")}><Text.Header text={"register"} /></Button>
+                            <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
+                            <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
+                        </View>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -52,6 +49,18 @@ const LoginPage: FC<IProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        width: '75%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    scrollViewStyle: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+    },
     signIcons: {
         position: 'absolute',
         right: 0,
@@ -60,7 +69,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '75%',
+        width: '100%',
     },
     backgroundStyle: {
         position: 'absolute',
@@ -75,7 +84,7 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         display: 'flex',
-        width: '75%',
+        width: '100%',
         justifyContent: 'center',
         alignContent: 'center',
         flexDirection: 'row',
