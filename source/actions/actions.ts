@@ -27,7 +27,6 @@ interface ISubscribeUserData {
 export const createAccount = ({email, password, username, callback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
         const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username});
-        console.log(response);
         if(response.status === 200) {
             const firestoreID = response.data.firestoreID;
             dispatch({type: SIGN_IN, payload: firestoreID});
