@@ -20,11 +20,7 @@ const LoginPage: FC<IProps> = (props) => {
                 behavior='height'
             >
                 <ScrollView centerContent style={styles.scrollViewStyle}
-                    contentContainerStyle={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: Dimensions.get('window').height - 50,
-                    }}>
+                    contentContainerStyle={styles.contentContainerStyle}>
                     <View style={styles.mainContainer}>
                         <Image source={icons.logo} />
                         <Input placeholder={"Username"} />
@@ -49,6 +45,11 @@ const LoginPage: FC<IProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
+    contentContainerStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: Dimensions.get('window').height - 50,
+    },
     mainContainer: {
         width: '75%',
         height: '100%',

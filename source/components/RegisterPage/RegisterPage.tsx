@@ -15,14 +15,10 @@ const RegisterPage: FC<IProps> = (props) => {
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
-            <ScrollView contentContainerStyle={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: Dimensions.get('window').height - 50,
-            }}
+            <ScrollView contentContainerStyle={styles.contentContainerStyle}
                 style={styles.scrollViewStyle}>
                 <View style={[styles.flexCentered, styles.inputContainer]}>
-                    <View style={{ width: '25%' }}>
+                    <View style={styles.gobackButton}>
                         <Button variant={'secondary'} onPress={() => props.history.push("/")}><Text.Paragraph text={"go back"} /></Button>
                     </View>
                     <Input placeholder={"username"} />
@@ -41,6 +37,14 @@ const RegisterPage: FC<IProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
+    gobackButton: {
+        width: '25%'
+    },
+    contentContainerStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: Dimensions.get('window').height - 50,
+    },
     flexCentered: {
         display: 'flex',
         justifyContent: 'center',
