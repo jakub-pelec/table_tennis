@@ -12,7 +12,8 @@ const Button: FC<IProps & TextProps> = (props) => {
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 12
+        fontSize: 12,
+        color: '#4D375D'
     },
     primary: {
         color: 'white',
