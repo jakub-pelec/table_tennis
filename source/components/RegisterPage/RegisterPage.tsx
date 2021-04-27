@@ -1,17 +1,61 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native';
+import {connect} from 'react-redux';
 import Input from '../../shared/styled-components/Input/Input';
 import icons from '../../assets/export';
 import Button from '../../shared/styled-components/Button/Button';
 import Text from '../../shared/styled-components/Text/export';
 import { RouteComponentProps } from 'react-router';
-
-
+import {createAccount} from '../../actions/actions';
 
 interface IProps extends RouteComponentProps {
+    createAccount: (s: any) => void
+}
+interface IFormState {
+    email: string,
+    password: string,
+    username: string,
+    rePassword: string
 }
 
+type Field = 'email' | 'password' | 'rePassword' | 'username';
+
 const RegisterPage: FC<IProps> = (props) => {
+    const [data, setData] = useState<IFormState>({
+        email: '',
+        username: '',
+        password: '',
+        rePassword: ''
+    });
+
+    const handleFieldChange = (type: Field, text: string) => {
+        return setData({...data, [type]: text});
+    }
+
+    const validate = (state: IFormState) => {
+        // TODO: Validate form fields
+        const {password, rePassword, email, username} = state;
+        if(password && rePassword && email && username) {
+            if(password === rePassword) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    const handleSubmit = () => {
+        // TODO: Handle backend rejection and failed validation
+        if(validate(data)) {
+            const callback = () => props.history.push('/dashboard');
+            const {email, password, username} = data;
+            return props.createAccount({email, password, username, callback});
+        }
+    }
+
+    const returnToLoginPage = () => {
+        return props.history.push('/');
+    }
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
@@ -19,14 +63,14 @@ const RegisterPage: FC<IProps> = (props) => {
                 style={styles.scrollViewStyle}>
                 <View style={[styles.flexCentered, styles.inputContainer]}>
                     <View style={styles.gobackButton}>
-                        <Button variant={'secondary'} onPress={() => props.history.push("/")}><Text.Paragraph text={"go back"} /></Button>
+                        <Button variant={'secondary'} onPress={returnToLoginPage}><Text.Paragraph text={"go back"} /></Button>
                     </View>
-                    <Input placeholder={"username"} />
-                    <Input placeholder={"e-mail"} />
-                    <Input secureTextEntry placeholder={"password"} />
-                    <Input secureTextEntry placeholder={"repeat password"} />
+                    <Input placeholder={"username"} onChangeText={(text) => handleFieldChange('username', text)} />
+                    <Input placeholder={"e-mail"} onChangeText={(text) => handleFieldChange('email', text)} />
+                    <Input secureTextEntry placeholder={"password"} onChangeText={(text) => handleFieldChange('password', text)} />
+                    <Input secureTextEntry placeholder={"repeat password"} onChangeText={(text) => handleFieldChange('rePassword', text)} />
                     <View style={[styles.flexCentered, styles.signInButtonContainer]}>
-                        <Button variant={'primary'} onPress={() => console.log("register")}><Text.Button variant={'primary'} text={"register"} /></Button>
+                        <Button variant={'primary'} onPress={handleSubmit}><Text.Button variant={'primary'} text={"register"} /></Button>
                     </View>
                     <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
                     <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
@@ -79,4 +123,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RegisterPage
+export default connect(null, {createAccount})(RegisterPage)
