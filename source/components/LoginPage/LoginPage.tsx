@@ -20,10 +20,12 @@ interface IFormState {
     password: string
 }
 
+type Field = 'email' | 'password';
+
 const LoginPage: FC<IProps> = (props) => {
     const [data, setData] = useState<IFormState>({email: '', password: ''});
 
-    const handleFieldChange = (type: string, value: string) => {
+    const handleFieldChange = (type: Field, value: string) => {
         return setData({...data, [type]: value});
     }
 
@@ -34,7 +36,7 @@ const LoginPage: FC<IProps> = (props) => {
     }
 
     const handleSignIn = () => {
-        // TODO: Handle backend rejection
+        // TODO: Handle backend rejection and wrong validation
         if(validate(data)) {
             const callback = () => props.history.push('/dashboard');
             return props.signIn({...data, callback});
