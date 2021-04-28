@@ -6,6 +6,7 @@ import ChampionTitle from '../ChampionTitle/ChampionTitle';
 import UsernameCard from '../UsernameCard/UsernameCard';
 import icons from '../../assets/export';
 import Text from '../../shared/styled-components/Text/export';
+import Sidebar from '../Sidebar/Sidebar';
 interface IProps extends RouteComponentProps {
 };
 
@@ -20,12 +21,11 @@ const DashboardPage: FC<IProps> = (props) => {
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
-            <View>
+            <View style={{ width: '33%' }}>
                 <Button onPress={() => { setSidebarShown(!sidebarShown) }} variant='secondary'><Text.Paragraph text='menu' /></Button>
             </View>
             <View style={styling()}>
-                {sidebarShown === true ? <View style={styles.sidebar}>
-                </View> : <></>}
+                {sidebarShown === true ? <Sidebar /> : <></>}
                 <View style={styles.cardsContainer}>
                     <View style={styles.usernameCardContainer}>
                         <UsernameCard username={'pelec'} rating={3021} wins={51} losses={10}></UsernameCard>
@@ -33,7 +33,6 @@ const DashboardPage: FC<IProps> = (props) => {
                     <ScrollView style={styles.scrollViewStyle}>
                         <View style={styles.insideScrollViewStyle}>
                             <ChampionTitle count={0} text={'król Albanii'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={3} text={'5cm chuja sobczaka'} variant={'dashboard'}></ChampionTitle>
                             <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
                             <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
                             <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
@@ -57,7 +56,9 @@ const styles = StyleSheet.create({
         height: '33%',
         width: '90%',
         padding: '10%',
-        backgroundColor: 'rgba(203,203,202,0.5)'
+        backgroundColor: 'rgba(203,203,202,0.5)',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
     },
     sidebar: {
         width: '17.5%',
