@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: Dimensions.get('window').height - 50,
+
     },
     mainContainer: {
         width: '75%',
