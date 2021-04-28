@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#C0E218',
         color: '#ffffff',
         borderRadius: 5,
+        marginBottom: 2
     },
     secondary: {
 

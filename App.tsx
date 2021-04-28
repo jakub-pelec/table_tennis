@@ -3,7 +3,6 @@ import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './store';
 import Router from './source/components/Router/Router';
-import DashboardPage from './source/components/DashboardPage/DashboardPage';
 
 
 interface IProps { };

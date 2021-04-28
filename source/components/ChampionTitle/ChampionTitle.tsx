@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import icons from '../../assets/export';
+import Button from '../../shared/styled-components/Button/Button';
 import Text from '../../shared/styled-components/Text/export';
 
 
@@ -22,7 +23,9 @@ const ChampionTitle: FC<IProps> = (props) => {
                 </View>
             </View>
             <Text.ChampionTitleText color={"black"} variant={'default'} text={props.text} />
-            <Image style={styles.arrowStyle} source={icons.arrow} />
+            <View style={styles.arrowStyle}>
+                <Button onPress={() => console.log("arrowclicked")} variant='secondary'><Image style={styles.arrowStyle} source={icons.arrow} /></Button>
+            </View>
         </View>
     )
 }
@@ -42,7 +45,8 @@ const styles = StyleSheet.create({
     },
     arrowStyle: {
         position: 'absolute',
-        right: 0
+        right: 0,
+        width: 28
     },
     crownStyle: {
         marginRight: '5%',
