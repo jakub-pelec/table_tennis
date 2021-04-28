@@ -20,19 +20,43 @@ interface IFormState {
     password: string
 }
 
+type Field = 'email' | 'password';
+
 const LoginPage: FC<IProps> = (props) => {
     const [data, setData] = useState<IFormState>({email: '', password: ''});
-    const handleFieldChange = (type: string, value: string) => {
-        setData({...data, [type]: value});
+
+    const handleFieldChange = (type: Field, value: string) => {
+        return setData({...data, [type]: value});
+    }
+
+    const validate = (state: IFormState) => {
+        /*
+            TODO: Validate fields, acceptance criteria:
+                    - email must be a valid email
+        */
+        const {email, password} = state;
+        return email && password;
     }
 
     const handleSignIn = () => {
-        const callback = () => props.history.push('/dashboard');
-        props.signIn({...data, callback});
+        /*
+            TODO: Handle failed validation and backend rejection, acceptance criteria:
+                - backend:
+                    - wrong password
+                    - non-existent email
+                    - too many request (spam prevention)
+                    - other (server issue)
+                - validation:
+                    - visual feedback for user
+        */
+        if(validate(data)) {
+            const callback = () => props.history.push('/dashboard');
+            return props.signIn({...data, callback});
+        }
     }
 
-    const handleRegister = () => {
-        props.history.push('/register');
+    const redirectToRegisterPage = () => {
+        return props.history.push('/register');
     }
     return (
         <>
@@ -55,7 +79,7 @@ const LoginPage: FC<IProps> = (props) => {
                             <View style={styles.signInButtonContainer}>
                                 <Button variant={'primary'} onPress={handleSignIn}><Text.Button variant={'primary'} text={"sign in"} /></Button>
                             </View>
-                            <Button variant={'secondary'} onPress={handleRegister}><Text.Header text={"register"} /></Button>
+                            <Button variant={'secondary'} onPress={redirectToRegisterPage}><Text.Header text={"register"} /></Button>
                             <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
                             <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
                         </View>
