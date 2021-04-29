@@ -1,112 +1,105 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { Image, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
-import CheckBox from '@react-native-community/checkbox'
+import {
+    Image,
+    StyleSheet,
+    View,
+    Dimensions,
+    KeyboardAvoidingView,
+    ScrollView,
+    Alert,
+} from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import Button from '../../shared/styled-components/Button/Button';
-import Input from '../../shared/styled-components/Input/Input';
 import Text from '../../shared/styled-components/Text/export';
 import icons from '../../assets/export';
-import { signIn, createAccount } from '../../actions/actions';
+import { signIn } from '../../actions/actions';
 import { RouteComponentProps } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../schemas/schemas';
+import Layout from '../../shared/styled-components/Layout/Layout';
+import FormInput from '../../shared/formComponents/FormInput/FormInput';
+import { ROUTES } from '../../constants/routes';
 
 interface IProps extends RouteComponentProps {
-    signIn: (s: any) => void,
-    createAccount: (s: any) => void
-};
-
-interface IFormState {
-    email: string,
-    password: string
+    signIn: (s: any) => void;
 }
 
-type Field = 'email' | 'password';
-
-const LoginPage: FC<IProps> = (props) => {
-    const [data, setData] = useState<IFormState>({ email: '', password: '' });
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(loginSchema)
+const LoginPage: FC<IProps> = props => {
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(loginSchema),
     });
 
-    const handleFieldChange = (type: Field, value: string) => {
-        return setData({ ...data, [type]: value });
-    }
-
-    const validate = (state: IFormState) => {
-        /*
-            TODO: Validate fields, acceptance criteria:
-                    - email must be a valid email
-        */
-        const { email, password } = state;
-        return email && password;
-    }
-
-    const handleSignIn = () => {
-        /*
-            TODO: Handle failed validation and backend rejection, acceptance criteria:
-                - backend:
-                    - wrong password
-                    - non-existent email
-                    - too many request (spam prevention)
-                    - other (server issue)
-                - validation:
-                    - visual feedback for user
-        */
-        if (validate(data)) {
-            const callback = () => props.history.push('/dashboard');
-            return props.signIn({ ...data, callback });
-        }
-    }
-
     const redirectToRegisterPage = () => {
-        return props.history.push('/register');
+        return props.history.push(ROUTES.REGISTER);
+    };
+
+    const onSubmit = (data: any) => {
+        const { email, password } = data;
+        const callback = () => props.history.push(ROUTES.DASHBOARD);
+        const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
+        props.signIn({ email, password, callback, errorCallback })
     }
+
     return (
         <>
             <Image style={styles.backgroundStyle} source={icons.background} />
             <KeyboardAvoidingView
                 style={styles.keyboardAvoidingViewStyle}
-                behavior='height'
-            >
-                <ScrollView centerContent style={styles.scrollViewStyle}
+                behavior="height">
+                <ScrollView
+                    centerContent
+                    style={styles.scrollViewStyle}
                     contentContainerStyle={styles.contentContainerStyle}>
-                    <View style={styles.mainContainer}>
+                    <Layout>
                         <Image source={icons.logo} />
-                        <Input placeholder={"Username"} onChangeText={(text) => handleFieldChange('email', text)} />
-                        <Input placeholder={"Password"} secureTextEntry onChangeText={(text) => handleFieldChange('password', text)} />
+                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
+                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
                         <View style={styles.checkboxContainer}>
-                            <Text.Paragraph text={"keep me logged in"}></Text.Paragraph>
+                            <Text.Paragraph text={'keep me logged in'}></Text.Paragraph>
                             <CheckBox style={styles.signIcons}></CheckBox>
                         </View>
-                        <View style={styles.ButtonsContainer}>
+                        <View style={styles.buttonsContainer}>
                             <View style={styles.signInButtonContainer}>
-                                <Button variant={'primary'} onPress={handleSignIn}><Text.Button variant={'primary'} text={"sign in"} /></Button>
+                                <Button variant={'primary'} onPress={handleSubmit(onSubmit)}>
+                                    <Text.Button variant={'primary'} text={'sign in'} />
+                                </Button>
                             </View>
-                            <Button variant={'secondary'} onPress={redirectToRegisterPage}><Text.Header text={"register"} /></Button>
-                            <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
-                            <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
+                            <Button variant={'secondary'} onPress={redirectToRegisterPage}>
+                                <Text.Header text={'register'} />
+                            </Button>
+                            <Button
+                                variant={'secondary'}
+                                onPress={() => console.log('facebook clicked')}>
+                                <Text.Paragraph text={'sign in with facebook'} />
+                                <Image style={styles.signIcons} source={icons.facebook_icon} />
+                            </Button>
+                            <Button
+                                variant={'secondary'}
+                                onPress={() => console.log('google clicked')}>
+                                <Text.Paragraph text={'sign in with google'} />
+                                <Image style={styles.signIcons} source={icons.google_icon} />
+                            </Button>
                         </View>
-                    </View>
+                    </Layout>
                 </ScrollView>
             </KeyboardAvoidingView>
+
         </>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     contentContainerStyle: {
         justifyContent: 'center',
         alignItems: 'center',
         height: Dimensions.get('window').height - 50,
-    },
-    mainContainer: {
-        width: '75%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     scrollViewStyle: {
         width: '100%',
@@ -117,7 +110,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
     },
-    ButtonsContainer: {
+    buttonsContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -149,7 +142,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '75%',
         marginBottom: '10%',
+    },
+    inputContainer: {
+        width: '100%'
     }
 });
 
-export default connect(null, { signIn, createAccount })(LoginPage);
+export default connect(null, { signIn })(LoginPage);

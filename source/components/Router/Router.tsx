@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { AppRegistry } from 'react-native';
 import { Route, NativeRouter, Switch } from 'react-router-native';
+import { ROUTES } from '../../constants/routes';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
@@ -10,8 +11,8 @@ const Router: FC<IProps> = () => {
     return (
         <NativeRouter>
             <Switch>
-                <Route path='/' exact component={LoginPage} />
-                <Route path='/register' exact component={RegisterPage} />
+                <Route path={ROUTES.LOGIN} exact component={LoginPage} />
+                <Route path={ROUTES.REGISTER} exact component={RegisterPage} />
             </Switch>
         </NativeRouter>
     )
