@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AppRegistry, StyleProp, TextInputProps, View, ViewStyle } from 'react-native';
 import { Controller, Control, FieldValues } from 'react-hook-form';
-import Input from '../../styled-components/Input/Input';
+import Input from '@shared/styled-components/Input/Input';
 
 interface IProps {
     control: Control<FieldValues>,

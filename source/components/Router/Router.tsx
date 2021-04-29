@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AppRegistry } from 'react-native';
 import { Route, NativeRouter, Switch } from 'react-router-native';
-import { ROUTES } from '../../constants/routes';
+import { ROUTES } from '@constants/routes';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 

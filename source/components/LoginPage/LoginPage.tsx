@@ -5,23 +5,23 @@ import {
     Image,
     StyleSheet,
     View,
-    Dimensions,
     KeyboardAvoidingView,
     ScrollView,
     Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import Button from '../../shared/styled-components/Button/Button';
-import Text from '../../shared/styled-components/Text/export';
-import icons from '../../assets/export';
-import { signIn } from '../../actions/actions';
+import Button from '@shared/styled-components/Button/Button';
+import Text from '@shared/styled-components/Text/export';
+import icons from '@assets/export';
+import { signIn } from '@actions/actions';
 import { RouteComponentProps } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../schemas/schemas';
-import Layout from '../../shared/styled-components/Layout/Layout';
-import FormInput from '../../shared/formComponents/FormInput/FormInput';
-import { ROUTES } from '../../constants/routes';
+import { loginSchema } from '@schemas/schemas';
+import Layout from '@shared/styled-components/Layout/Layout';
+import FormInput from '@shared/formComponents/FormInput/FormInput';
+import { ROUTES } from '@constants/routes';
+import { DIMENSIONS } from '@constants/deviceValues';
 
 interface IProps extends RouteComponentProps {
     signIn: (s: any) => void;
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     contentContainerStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: Dimensions.get('window').height - 50,
+        height: DIMENSIONS.nativeHeight - 50,
     },
     scrollViewStyle: {
         width: '100%',

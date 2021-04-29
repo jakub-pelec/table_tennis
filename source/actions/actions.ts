@@ -1,11 +1,11 @@
-import {auth, firestore} from '../env/firebaseConfig';
+import {auth, firestore} from '@env/firebaseConfig';
 import firebase from 'firebase';
 import {Dispatch} from 'redux';
 import { SIGN_IN, SUBSCRIBE } from './types';
 import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
-import { API_PATH } from '../constants/apiPaths';
-import { COLLECTIONS } from '../constants/collections';
+import { API_PATH } from '@constants/apiPaths';
+import { COLLECTIONS } from '@constants/collections';
 
 interface IHandlers {
     callback: (s?: any) => void,

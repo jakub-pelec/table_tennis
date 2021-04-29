@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
 import firebase from 'firebase';
-import { Alert, Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, View } from 'react-native';
 import {connect} from 'react-redux';
-import icons from '../../assets/export';
-import Button from '../../shared/styled-components/Button/Button';
-import Text from '../../shared/styled-components/Text/export';
+import icons from '@assets/export';
+import Button from '@shared/styled-components/Button/Button';
+import Text from '@shared/styled-components/Text/export';
 import { RouteComponentProps } from 'react-router';
-import {createAccount} from '../../actions/actions';
+import {createAccount} from '@actions/actions';
 import { useForm } from 'react-hook-form';
-import {registerSchema} from '../../schemas/schemas';
+import {registerSchema} from '@schemas/schemas';
 import {yupResolver} from '@hookform/resolvers/yup';
-import Layout from '../../shared/styled-components/Layout/Layout';
-import FormInput from '../../shared/formComponents/FormInput/FormInput';
-import { ROUTES } from '../../constants/routes';
+import Layout from '@shared/styled-components/Layout/Layout';
+import FormInput from '@shared/formComponents/FormInput/FormInput';
+import { ROUTES } from '@constants/routes';
+import { DIMENSIONS } from '@constants/deviceValues';
 
 interface IProps extends RouteComponentProps {
     createAccount: (s: any) => void
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     contentContainerStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: Dimensions.get('window').height - 50,
+        height: DIMENSIONS.nativeHeight - 50,
     },
     flexCentered: {
         display: 'flex',
