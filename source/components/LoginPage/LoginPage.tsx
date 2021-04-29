@@ -9,7 +9,8 @@ import icons from '../../assets/export';
 import { signIn, createAccount } from '../../actions/actions';
 import { RouteComponentProps } from 'react-router';
 import { useForm } from 'react-hook-form';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../../schemas/schemas';
 
 interface IProps extends RouteComponentProps {
     signIn: (s: any) => void,
@@ -25,6 +26,9 @@ type Field = 'email' | 'password';
 
 const LoginPage: FC<IProps> = (props) => {
     const [data, setData] = useState<IFormState>({ email: '', password: '' });
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(loginSchema)
+    });
 
     const handleFieldChange = (type: Field, value: string) => {
         return setData({ ...data, [type]: value });
