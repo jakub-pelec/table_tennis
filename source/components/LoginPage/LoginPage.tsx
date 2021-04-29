@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Image, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox'
 import Button from '../../shared/styled-components/Button/Button';
@@ -8,6 +8,7 @@ import Text from '../../shared/styled-components/Text/export';
 import icons from '../../assets/export';
 import { signIn, createAccount } from '../../actions/actions';
 import { RouteComponentProps } from 'react-router';
+import { useForm } from 'react-hook-form';
 
 
 interface IProps extends RouteComponentProps {
@@ -23,10 +24,10 @@ interface IFormState {
 type Field = 'email' | 'password';
 
 const LoginPage: FC<IProps> = (props) => {
-    const [data, setData] = useState<IFormState>({email: '', password: ''});
+    const [data, setData] = useState<IFormState>({ email: '', password: '' });
 
     const handleFieldChange = (type: Field, value: string) => {
-        return setData({...data, [type]: value});
+        return setData({ ...data, [type]: value });
     }
 
     const validate = (state: IFormState) => {
@@ -34,7 +35,7 @@ const LoginPage: FC<IProps> = (props) => {
             TODO: Validate fields, acceptance criteria:
                     - email must be a valid email
         */
-        const {email, password} = state;
+        const { email, password } = state;
         return email && password;
     }
 
@@ -49,9 +50,9 @@ const LoginPage: FC<IProps> = (props) => {
                 - validation:
                     - visual feedback for user
         */
-        if(validate(data)) {
+        if (validate(data)) {
             const callback = () => props.history.push('/dashboard');
-            return props.signIn({...data, callback});
+            return props.signIn({ ...data, callback });
         }
     }
 
@@ -147,4 +148,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, {signIn, createAccount})(LoginPage);
+export default connect(null, { signIn, createAccount })(LoginPage);
