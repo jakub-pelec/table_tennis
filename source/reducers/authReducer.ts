@@ -1,5 +1,5 @@
-import {SIGN_IN, SIGN_OUT} from '../actions/types';
-import { ActionWithPayload } from '../typings/redux';
+import {SIGN_IN, SIGN_OUT} from '@actions/types';
+import { ActionWithPayload } from '@typings/redux';
 
 export const INITIAL_STATE = {
     isAuthenticated: false,
