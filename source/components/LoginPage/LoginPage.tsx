@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import firebase from 'firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import {
     Image,
@@ -9,7 +10,6 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import Button from '@shared/styled-components/Button/Button';
 import Text from '@shared/styled-components/Text/export';
 import icons from '@assets/export';
@@ -19,7 +19,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@schemas/schemas';
 import Layout from '@shared/styled-components/Layout/Layout';
-import FormInput from '@shared/formComponents/FormInput/FormInput';
+import FormInput from '@shared/form-components/FormInput/FormInput';
+import FormCheckbox from '@shared/form-components/Checkbox/Checkbox';
 import { ROUTES } from '@constants/routes';
 import { DIMENSIONS } from '@constants/deviceValues';
 
@@ -36,13 +37,31 @@ const LoginPage: FC<IProps> = props => {
         resolver: yupResolver(loginSchema),
     });
 
+    useEffect(() => {
+        const autoLogin = async() => {
+            const [[,email], [,password]] = await AsyncStorage.multiGet(['@email', '@password']);
+            const callback = () => props.history.push(ROUTES.DASHBOARD);
+            const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
+            if(email && password) {
+                props.signIn({ email, password, callback, errorCallback })
+            }
+        }
+        autoLogin();
+    }, []);
+
     const redirectToRegisterPage = () => {
         return props.history.push(ROUTES.REGISTER);
     };
 
     const onSubmit = (data: any) => {
-        const { email, password } = data;
-        const callback = () => props.history.push(ROUTES.DASHBOARD);
+        const { email, password, keepLoggedIn } = data;
+        const callback = async () => {
+            if(keepLoggedIn) {
+                await AsyncStorage.setItem('@email', email);
+                await AsyncStorage.setItem('@password', password);
+            }
+            return props.history.push(ROUTES.DASHBOARD);
+        }
         const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
         props.signIn({ email, password, callback, errorCallback })
     }
@@ -61,9 +80,9 @@ const LoginPage: FC<IProps> = props => {
                         <Image source={icons.logo} />
                         <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
                         <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
-                        <View style={styles.checkboxContainer}>
+                        <View style={styles.checkboxWithLabelContainer}>
                             <Text.Paragraph text={'keep me logged in'}></Text.Paragraph>
-                            <CheckBox style={styles.signIcons}></CheckBox>
+                            <FormCheckbox control={control} checkboxContainerStyle={styles.checkboxContainer} name='keepLoggedIn'></FormCheckbox>
                         </View>
                         <View style={styles.buttonsContainer}>
                             <View style={styles.signInButtonContainer}>
@@ -90,7 +109,6 @@ const LoginPage: FC<IProps> = props => {
                     </Layout>
                 </ScrollView>
             </KeyboardAvoidingView>
-
         </>
     );
 };
@@ -127,7 +145,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
-    checkboxContainer: {
+    checkboxWithLabelContainer: {
         display: 'flex',
         width: '100%',
         justifyContent: 'center',
@@ -145,6 +163,10 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         width: '100%'
+    },
+    checkboxContainer: {
+        alignSelf: 'center',
+        transform: [{translateY: -4}, {translateX: 10}]
     }
 });
 

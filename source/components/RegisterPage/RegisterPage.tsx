@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import {registerSchema} from '@schemas/schemas';
 import {yupResolver} from '@hookform/resolvers/yup';
 import Layout from '@shared/styled-components/Layout/Layout';
-import FormInput from '@shared/formComponents/FormInput/FormInput';
+import FormInput from '@shared/form-components/FormInput/FormInput';
 import { ROUTES } from '@constants/routes';
 import { DIMENSIONS } from '@constants/deviceValues';
 
