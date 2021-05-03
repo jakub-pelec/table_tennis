@@ -1,5 +1,5 @@
-import {AUTH_STATE} from '../reducers/auth';
-import { FETCH_STATE } from '../reducers/fetch';
+import {AUTH_STATE} from '@reducers/auth';
+import { FETCH_STATE } from '@reducers/fetch';
 import {Action} from 'redux';
 
 export interface APP_STATE {

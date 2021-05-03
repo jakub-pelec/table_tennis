@@ -2,11 +2,10 @@ import React, { FC, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { RouteComponentProps } from 'react-router';
 import Button from '../../shared/styled-components/Button/Button';
-import ChampionTitle from '../ChampionTitle/ChampionTitle';
-import UsernameCard from '../UsernameCard/UsernameCard';
 import icons from '../../assets/export';
 import Text from '../../shared/styled-components/Text/export';
 import Sidebar from '../Sidebar/Sidebar';
+import HomePage from '@components/HomePage/HomePage';
 interface IProps extends RouteComponentProps {
 };
 
@@ -24,29 +23,9 @@ const DashboardPage: FC<IProps> = (props) => {
             <View style={{ width: '33%' }}>
                 <Button onPress={() => { setSidebarShown(!sidebarShown) }} variant='secondary'><Text.Paragraph text='menu' /></Button>
             </View>
-            <View style={styling()}>
-                {sidebarShown === true ? <Sidebar /> : <></>}
-                <View style={styles.cardsContainer}>
-                    <View style={styles.usernameCardContainer}>
-                        <UsernameCard username={'pelec'} rating={3021} wins={51} losses={10}></UsernameCard>
-                    </View>
-                    <ScrollView style={styles.scrollViewStyle}>
-                        <View style={styles.insideScrollViewStyle}>
-                            <ChampionTitle count={0} text={'król Albanii'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'władca wiatru'} variant={'dashboard'}></ChampionTitle>
-                            <ChampionTitle count={2} text={'właasddca wiatru'} variant={'dashboard'}></ChampionTitle>
-                        </View>
-                    </ScrollView>
-                    <View style={styles.buttonContainer}>
-                        <Button variant='primary'><Text.ChampionTitleText text="challenge" color="black" variant='dashboard' /></Button>
-                        <Button variant='primary'><Text.ChampionTitleText text="tournament" color="black" variant='dashboard' /></Button>
-                    </View>
-                </View>
-            </View>
+            {sidebarShown === true ? <Sidebar /> : <></>}
+            <HomePage />
+
         </>
     )
 }

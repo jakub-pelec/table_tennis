@@ -10,18 +10,22 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.4.0",
     "@react-native-community/checkbox": "^0.5.7",
     "@types/react-router-native": "^5.1.0",
+    "@types/yup": "^0.29.11",
     "axios": "^0.21.1",
     "firebase": "^8.4.2",
     "react": "17.0.1",
+    "react-hook-form": "^7.3.5",
     "react-native": "0.64.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-redux": "^7.2.4",
     "react-router-native": "^5.2.0",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

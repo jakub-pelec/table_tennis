@@ -1,5 +1,5 @@
-import {SUBSCRIBE, UNSUBSCRIBE} from '../actions/types';
-import { ActionWithPayload } from '../typings/redux';
+import {SUBSCRIBE, UNSUBSCRIBE} from '@actions/types';
+import { ActionWithPayload } from '@typings/redux';
 
 const initialTitles: string[] = [];
 
