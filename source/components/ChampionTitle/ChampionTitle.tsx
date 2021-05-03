@@ -12,12 +12,17 @@ interface IProps {
 }
 
 const ChampionTitle: FC<IProps> = (props) => {
+
+    const styling = () => {
+        return props.count >= 10 ? styles.crownCountStyle2Digit : styles.crownCountStyle1Digit
+    }
+
     return (
         <View style={[styles.default, styles[props.variant]]}>
             <View>
                 <View style={styles.crownStyle}>
                     <Image source={icons.champion_title_crown} />
-                    <View style={styles.crownCountStyle}>
+                    <View style={styling()}>
                         <Text.ChampionTitleText color={'#FFC93C'} variant={'crown'} text={String(props.count)} />
                     </View>
                 </View>
@@ -26,7 +31,7 @@ const ChampionTitle: FC<IProps> = (props) => {
             <View style={styles.arrowStyle}>
                 <Button onPress={() => console.log("arrowclicked")} variant='secondary'><Image style={styles.arrowStyle} source={icons.arrow} /></Button>
             </View>
-        </View>
+        </View >
     )
 }
 
@@ -52,10 +57,19 @@ const styles = StyleSheet.create({
     },
     crownStyle: {
         marginRight: '5%',
+        overflow: 'hidden'
     },
-    crownCountStyle: {
+    crownCountStyle1Digit: {
         position: 'absolute',
         left: 28,
+        top: 19,
+        width: 30,
+        height: 21,
+        padding: 0
+    },
+    crownCountStyle2Digit: {
+        position: 'absolute',
+        left: 23,
         top: 19,
         width: 30,
         height: 21,
