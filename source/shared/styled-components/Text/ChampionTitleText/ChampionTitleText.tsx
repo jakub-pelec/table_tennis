@@ -3,7 +3,7 @@ import { AppRegistry, ColorValue, StyleSheet, Text, TextProps } from 'react-nati
 
 interface IProps {
     text: string,
-    variant: 'dashboard' | 'default',
+    variant: 'dashboard' | 'crown' | 'default',
     color: any
 };
 
@@ -17,7 +17,7 @@ const ChampionTitleText: FC<IProps & TextProps> = (props) => {
         });
     }
 
-    return <Text {...props} style={[styles.default, colorVariant().colorVariant]}>{props.text}</Text>
+    return <Text {...props} style={[[styles.default, styles[props.variant]], colorVariant().colorVariant]}>{props.text}</Text>
 }
 
 let styles = StyleSheet.create({
@@ -28,6 +28,12 @@ let styles = StyleSheet.create({
         textAlign: 'left',
         maxWidth: '75%'
     },
+    dashboard: {
+        fontSize: 30,
+    },
+    crown: {
+        fontSize: 18,
+    }
 });
 
 AppRegistry.registerComponent('championTitleText', () => ChampionTitleText);

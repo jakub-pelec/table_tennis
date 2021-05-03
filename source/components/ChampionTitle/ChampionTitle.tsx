@@ -8,7 +8,7 @@ import Text from '../../shared/styled-components/Text/export';
 interface IProps {
     count: number,
     text: string,
-    variant: 'dashboard'
+    variant: 'homepage'
 }
 
 const ChampionTitle: FC<IProps> = (props) => {
@@ -18,7 +18,7 @@ const ChampionTitle: FC<IProps> = (props) => {
                 <View style={styles.crownStyle}>
                     <Image source={icons.champion_title_crown} />
                     <View style={styles.crownCountStyle}>
-                        <Text.ChampionTitleText color={'#FFC93C'} variant={'dashboard'} text={String(props.count)} />
+                        <Text.ChampionTitleText color={'#FFC93C'} variant={'crown'} text={String(props.count)} />
                     </View>
                 </View>
             </View>
@@ -38,14 +38,16 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
+        padding: '1%'
     },
-    dashboard: {
-        borderBottomWidth: 1,
-        borderColor: 'black'
+    homepage: {
+        backgroundColor: 'rgba(172,172,172,0.2)',
+        borderRadius: 10,
+        marginBottom: '1%'
     },
     arrowStyle: {
         position: 'absolute',
-        right: 0,
+        right: 5,
         width: 28
     },
     crownStyle: {
@@ -54,8 +56,8 @@ const styles = StyleSheet.create({
     crownCountStyle: {
         position: 'absolute',
         left: 28,
-        top: 18,
-        width: 18,
+        top: 19,
+        width: 30,
         height: 21,
         padding: 0
     }

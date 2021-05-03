@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { AppRegistry, StyleSheet, Text, TextProps } from 'react-native';
 
 interface IProps {
-    variant: 'primary' | 'secondary',
+    variant: 'primary' | 'secondary' | 'homepage',
     text: string
 };
 
@@ -20,8 +20,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Baloo2-Bold',
         fontSize: 24,
     },
-    secondary: {
-
+    secondary: {},
+    homepage: {
+        fontSize: 30,
+        fontFamily: 'Baloo2-Bold',
+        color: 'black',
+        textAlign: 'left',
+        maxWidth: '75%'
     },
 });
 

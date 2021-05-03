@@ -38,11 +38,11 @@ const LoginPage: FC<IProps> = props => {
     });
 
     useEffect(() => {
-        const autoLogin = async() => {
-            const [[,email], [,password]] = await AsyncStorage.multiGet(['@email', '@password']);
+        const autoLogin = async () => {
+            const [[, email], [, password]] = await AsyncStorage.multiGet(['@email', '@password']);
             const callback = () => props.history.push(ROUTES.DASHBOARD);
             const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
-            if(email && password) {
+            if (email && password) {
                 props.signIn({ email, password, callback, errorCallback })
             }
         }
@@ -56,7 +56,7 @@ const LoginPage: FC<IProps> = props => {
     const onSubmit = (data: any) => {
         const { email, password, keepLoggedIn } = data;
         const callback = async () => {
-            if(keepLoggedIn) {
+            if (keepLoggedIn) {
                 await AsyncStorage.setItem('@email', email);
                 await AsyncStorage.setItem('@password', password);
             }
@@ -91,7 +91,7 @@ const LoginPage: FC<IProps> = props => {
                                 </Button>
                             </View>
                             <Button variant={'secondary'} onPress={redirectToRegisterPage}>
-                                <Text.Header text={'register'} />
+                                <Text.Header variant='default' text={'register'} />
                             </Button>
                             <Button
                                 variant={'secondary'}
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         alignSelf: 'center',
-        transform: [{translateY: -4}, {translateX: 10}]
+        transform: [{ translateY: -4 }, { translateX: 10 }]
     }
 });
 

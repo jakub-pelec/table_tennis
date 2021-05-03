@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     default: {
         width: '17.5%',
         backgroundColor: 'rgba(203,203,202,0.5)',
+        position: 'absolute',
         height: '100%',
         marginRight: '2.5%',
         display: 'flex',

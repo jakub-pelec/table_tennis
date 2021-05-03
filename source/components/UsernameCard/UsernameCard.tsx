@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Text from '../../shared/styled-components/Text/export';
+import Text from '@shared/styled-components/Text/export';
 
 interface IProps {
     username: string,
