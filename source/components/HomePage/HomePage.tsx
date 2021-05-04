@@ -1,36 +1,51 @@
+import React, { FC } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import {withRouter} from 'react-router-native';
 import ChampionTitle from '@components/ChampionTitle/ChampionTitle';
 import UsernameCard from '@components/UsernameCard/UsernameCard';
 import Button from '@shared/styled-components/Button/Button';
-import React, { FC } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
 import Text from '@shared/styled-components/Text/export';
 import { DIMENSIONS } from '@constants/deviceValues';
+import {connect} from 'react-redux';
+import { APP_STATE } from '@typings/redux';
+import {logout} from '@actions/actions';
+import { RouteComponentProps } from 'react-router';
 
-interface IProps {
+interface IProps extends RouteComponentProps {
+    username: string,
+    wins: number,
+    loses: number,
+    titles: string[],
+    rating: number,
+    logout: (s: any) => void
 }
 
 const HomePage: FC<IProps> = (props) => {
+    const mockTitles = ['władca wiatru', 'dupa konia', 'chuj sobczaka'];
 
-    const przykladowyarray = [1];
+    //TODO: Connect with 'logout' button when done.
+    const handleLogout = () => {
+        const callback = () => props.history.push('/');
+        const errorCallback = (e: any) => console.log(e);
+        props.logout({callback, errorCallback});
+    }
 
     return (
         <View>
             <View style={styles.cardsContainer}>
                 <View style={styles.usernameCardContainer}>
-                    <UsernameCard username={'pelec'} rating={3021} wins={51} losses={10}></UsernameCard>
+                    <UsernameCard username={props.username} rating={props.rating} wins={props.wins} losses={props.loses}></UsernameCard>
                 </View>
                 <ScrollView style={styles.scrollViewStyle}>
-                    {przykladowyarray.length === 0 ? <Text.Header variant='homepage' text='No titles' /> : <View style={styles.insideScrollViewStyle}>
-                        <ChampionTitle count={2} text={'władca wiatru'} variant={'homepage'}></ChampionTitle>
-                        <ChampionTitle count={2} text={'władca wiatru'} variant={'homepage'}></ChampionTitle>
-                        <ChampionTitle count={10} text={'władca wiatru'} variant={'homepage'}></ChampionTitle>
-                        <ChampionTitle count={2} text={'władca wiatru'} variant={'homepage'}></ChampionTitle>
-                        <ChampionTitle count={20} text={'władca wiatru'} variant={'homepage'}></ChampionTitle>
-                        <ChampionTitle count={2} text={'właasasdca wiatru'} variant={'homepage'}></ChampionTitle>
+                    {/* TODO: Replace with props.titles when done styling */}
+                    {mockTitles.length === 0 ? <Text.Header variant='homepage' text='No titles' /> : 
+                    <View style={styles.insideScrollViewStyle}>
+                        {/* TODO: Replace with props.titles when done styling */}
+                        {mockTitles.map((title, index) => <ChampionTitle key={index} count={1} text={title} variant='homepage'></ChampionTitle>)}
                     </View>}
                 </ScrollView>
                 <View style={styles.buttonContainer}>
-                    <Button variant='primary'><Text.Button variant='homepage' text='challenge' /></Button>
+                    <Button variant='primary'><Text.Button variant='homepage' text='challenge'/></Button>
                     <Button variant='primary'><Text.Button variant='homepage' text='tournament' /></Button>
                 </View>
             </View>
@@ -71,6 +86,14 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: '5%'
     },
+});
+
+const mapStateToProps = (state: APP_STATE) => ({
+    username: state.fetch.username,
+    wins: state.fetch.wins,
+    loses: state.fetch.loses,
+    titles: state.fetch.titles,
+    rating: state.fetch.rating
 })
 
-export default HomePage
+export default withRouter(connect(mapStateToProps, {logout})(HomePage));

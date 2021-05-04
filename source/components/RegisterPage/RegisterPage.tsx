@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import firebase from 'firebase';
 import { Alert, Image, ScrollView, StyleSheet, View } from 'react-native';
 import {connect} from 'react-redux';
 import icons from '@assets/export';
@@ -14,6 +13,7 @@ import Layout from '@shared/styled-components/Layout/Layout';
 import FormInput from '@shared/form-components/FormInput/FormInput';
 import { ROUTES } from '@constants/routes';
 import { DIMENSIONS } from '@constants/deviceValues';
+import { ReactNativeFirebase } from '@react-native-firebase/app';
 
 interface IProps extends RouteComponentProps {
     createAccount: (s: any) => void
@@ -38,7 +38,7 @@ const RegisterPage: FC<IProps> = (props) => {
     const onSubmit = (data: IFormState) => {
         const {email, password, username} = data;
         const callback = () => props.history.push(ROUTES.DASHBOARD);
-        const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message); 
+        const errorCallback = (error: ReactNativeFirebase.NativeFirebaseError) => Alert.alert(error.message); 
         props.createAccount({email, password, username, callback, errorCallback});
     }
 
@@ -46,8 +46,6 @@ const RegisterPage: FC<IProps> = (props) => {
         return props.history.push(ROUTES.LOGIN);
     }
     return (
-        <>
-            <Image style={styles.backgroundStyle} source={icons.background} />
             <ScrollView contentContainerStyle={styles.contentContainerStyle}
                 style={styles.scrollViewStyle}>
                 <Layout>
@@ -67,7 +65,6 @@ const RegisterPage: FC<IProps> = (props) => {
                     </View>
                 </Layout>
             </ScrollView>
-        </>
     )
 }
 
