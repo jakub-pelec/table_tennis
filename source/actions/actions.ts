@@ -1,4 +1,5 @@
-import {auth, firestore} from '@env/firebaseConfig';
+import {auth, firestore, messaging} from '@env/firebaseConfig';
+import NativeMessaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import firebase from 'firebase';
 import {Dispatch} from 'redux';
 import { SIGN_IN, SUBSCRIBE } from './types';
@@ -6,6 +7,7 @@ import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
 import { API_PATH } from '@constants/apiPaths';
 import { COLLECTIONS } from '@constants/collections';
+import { Alert } from 'react-native';
 
 interface IHandlers {
     callback: (s?: any) => void,
@@ -29,7 +31,13 @@ interface ISubscribeUserData {
 
 export const createAccount = ({email, password, username, callback, errorCallback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
-        const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username});
+        const authStatus = await messaging.requestPermission();
+        const authorized = authStatus && authStatus === NativeMessaging.AuthorizationStatus.AUTHORIZED && NativeMessaging.AuthorizationStatus.PROVISIONAL;
+        let token: string = '';
+        if(authorized) {
+            token = await messaging.getToken();
+        }
+        const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username, token});
         if(response.status === 200) {
             const firestoreID = response.data.firestoreID;
             dispatch({type: SIGN_IN, payload: firestoreID});
@@ -53,6 +61,14 @@ export const signIn = ({email, password, callback, errorCallback}: ISignInParams
         errorCallback(e);
     }
 };
+
+//TODO: Import and invoke in Dashboard (after login) and treat returned function as cleanup (useEffect)
+export const createForegroundMessagesHandler = async() => {
+    const unsubscribe = await messaging.onMessage(async(remoteMessage: FirebaseMessagingTypes.RemoteMessage): Promise<any> => {
+        Alert.alert(JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+}
 
 const subscribeUserData = ({id, dispatch}: ISubscribeUserData) => {
     //TODO: Unsubscribe on logout to prevent unnecessary data fetch
