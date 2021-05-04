@@ -2,7 +2,7 @@ import {auth, firestore, messaging} from '@env/firebaseConfig';
 import { ReactNativeFirebase } from '@react-native-firebase/app';
 import NativeMessaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import {Dispatch} from 'redux';
-import { KEEP_UNSUBSCRIPTION, SIGN_IN, SIGN_OUT, SUBSCRIBE, UNSUBSCRIBE } from './types';
+import { FETCH_USERS, KEEP_UNSUBSCRIPTION, KEEP_UNSUBSCRIPTION_USERS, SIGN_IN, SIGN_OUT, SUBSCRIBE, UNSUBSCRIBE, UNSUBSCRIBE_USERS } from './types';
 import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
 import { API_PATH } from '@constants/apiPaths';
@@ -32,6 +32,19 @@ interface ISubscribeUserData {
     dispatch: Dispatch
 }
 
+interface UserDocument {
+    username: string,
+    rating: number,
+    id: string
+}
+
+interface ISubscribeUsers {
+    dispatch: Dispatch,
+    id: string
+}
+
+type IPostLoginAction = ISubscribeUsers & ISubscribeUserData;
+
 export const createAccount = ({email, password, username, callback, errorCallback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
         const authStatus = await messaging.requestPermission();
@@ -43,8 +56,7 @@ export const createAccount = ({email, password, username, callback, errorCallbac
         const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username, token});
         if(response.status === 200) {
             const firestoreID = response.data.firestoreID;
-            dispatch({type: SIGN_IN, payload: firestoreID});
-            subscribeUserData({id: firestoreID, dispatch});
+            postLoginAction({id: firestoreID, dispatch});
             callback();
         }
     } catch(e) {
@@ -57,8 +69,7 @@ export const signIn = ({email, password, callback, errorCallback}: ISignInParams
         await auth.signInWithEmailAndPassword(email, password);
         const token = await auth.currentUser?.getIdTokenResult();
         const firestoreID = token?.claims.firestoreID;
-        dispatch({type: SIGN_IN, payload: firestoreID});
-        subscribeUserData({id: firestoreID, dispatch});
+        postLoginAction({id: firestoreID, dispatch});
         callback();
     } catch(e) {
         errorCallback(e);
@@ -82,15 +93,46 @@ const subscribeUserData = ({id, dispatch}: ISubscribeUserData) => {
     });
 }
 
+const subscribeUsers = ({id: ownId, dispatch}: ISubscribeUsers) => {
+    try {
+        const unsubscribe = firestore.collection(COLLECTIONS.USERS).onSnapshot((snapshot: FirebaseFirestoreTypes.QuerySnapshot) => {
+            const data: UserDocument[] = [];
+            snapshot.docs.forEach((doc: FirebaseFirestoreTypes.DocumentSnapshot) => {
+                const docData: any = doc.data();
+                const {username, rating} = docData;
+                const id = doc.id;
+                if(id !== ownId) {
+                    data.push({username, rating, id});
+                }
+            })
+            dispatch({type: FETCH_USERS, payload: data});
+        });
+        dispatch({type: KEEP_UNSUBSCRIPTION_USERS, payload: unsubscribe.toString()});
+    } catch(e) {
+        //TODO: handle error
+        console.log(e);
+    }
+}
+
+const postLoginAction = ({id, dispatch}: IPostLoginAction) => {
+    subscribeUserData({id, dispatch});
+    subscribeUsers({id, dispatch});
+    dispatch({type: SIGN_IN, payload: id});
+}
+
 export const logout = ({callback, errorCallback}: IHandlers) => async(dispatch: Dispatch, getState: () => APP_STATE) => {
     try {
-        const {unsubscribe: methodString} = getState().fetch;
-        await auth.signOut();
-        const unsubscribe = new Function(methodString);
+        const {unsubscribe: fetchMethodString} = getState().fetch;
+        const {unsubscribe: usersMethodString} = getState().users;
+        const unsubscribeFetch = new Function(fetchMethodString);
+        const unsubscribeUsers = new Function(usersMethodString);
         await AsyncStorage.clear();
-        unsubscribe();
+        unsubscribeFetch();
+        unsubscribeUsers();
         dispatch({type: UNSUBSCRIBE});
+        dispatch({type: UNSUBSCRIBE_USERS});
         dispatch({type: SIGN_OUT});
+        await auth.signOut();
         callback();
     } catch(e) {
         errorCallback(e);

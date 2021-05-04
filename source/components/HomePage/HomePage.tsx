@@ -94,6 +94,6 @@ const mapStateToProps = (state: APP_STATE) => ({
     loses: state.fetch.loses,
     titles: state.fetch.titles,
     rating: state.fetch.rating
-})
+});
 
 export default withRouter(connect(mapStateToProps, {logout})(HomePage));
