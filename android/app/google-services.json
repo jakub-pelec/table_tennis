@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1037923579048",
+    "project_id": "table-tennis-204a5",
+    "storage_bucket": "table-tennis-204a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037923579048:android:f6f59ed15ade5ae466be9d",
+        "android_client_info": {
+          "package_name": "com.tabletennis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037923579048-7gl733eqtcvspvi93gjoj84i02ujjd2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP9oKDRet4D6z1cThZKa3c30l5dC47T3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037923579048-7gl733eqtcvspvi93gjoj84i02ujjd2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
