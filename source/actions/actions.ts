@@ -1,15 +1,18 @@
-import {auth, firestore} from '@env/firebaseConfig';
-import firebase from 'firebase';
+import {auth, firestore, messaging} from '@env/firebaseConfig';
+import { ReactNativeFirebase } from '@react-native-firebase/app';
+import NativeMessaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import {Dispatch} from 'redux';
 import { SIGN_IN, SUBSCRIBE } from './types';
 import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
 import { API_PATH } from '@constants/apiPaths';
 import { COLLECTIONS } from '@constants/collections';
+import { Alert } from 'react-native';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 interface IHandlers {
     callback: (s?: any) => void,
-    errorCallback: (s: firebase.FirebaseError) => void
+    errorCallback: (s: ReactNativeFirebase.NativeFirebaseError) => void
 }
 interface ICreateAccountParams extends IHandlers {
     email: string,
@@ -29,7 +32,13 @@ interface ISubscribeUserData {
 
 export const createAccount = ({email, password, username, callback, errorCallback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
-        const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username});
+        const authStatus = await messaging.requestPermission();
+        const authorized = authStatus && authStatus === NativeMessaging.AuthorizationStatus.AUTHORIZED && NativeMessaging.AuthorizationStatus.PROVISIONAL;
+        let token: string = '';
+        if(authorized) {
+            token = await messaging.getToken();
+        }
+        const response = await axios.post(createApiUrl(API_PATH.createAccount), {email, password, username, token});
         if(response.status === 200) {
             const firestoreID = response.data.firestoreID;
             dispatch({type: SIGN_IN, payload: firestoreID});
@@ -54,9 +63,17 @@ export const signIn = ({email, password, callback, errorCallback}: ISignInParams
     }
 };
 
+//TODO: Import and invoke in Dashboard (after login) and treat returned function as cleanup (useEffect)
+export const createForegroundMessagesHandler = async() => {
+    const unsubscribe = await messaging.onMessage(async(remoteMessage: FirebaseMessagingTypes.RemoteMessage): Promise<any> => {
+        Alert.alert(JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+}
+
 const subscribeUserData = ({id, dispatch}: ISubscribeUserData) => {
     //TODO: Unsubscribe on logout to prevent unnecessary data fetch
-    const unsubscribe = firestore.collection(COLLECTIONS.USERS).doc(id).onSnapshot(snapshot => {
+    const unsubscribe = firestore.collection(COLLECTIONS.USERS).doc(id).onSnapshot((snapshot: any) => {
         if(snapshot.exists) {
             const data = snapshot.data();
             dispatch({type: SUBSCRIBE, payload: data});
