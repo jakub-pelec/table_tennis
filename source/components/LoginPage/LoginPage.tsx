@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import firebase from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import {
@@ -23,6 +22,7 @@ import FormInput from '@shared/form-components/FormInput/FormInput';
 import FormCheckbox from '@shared/form-components/Checkbox/Checkbox';
 import { ROUTES } from '@constants/routes';
 import { DIMENSIONS } from '@constants/deviceValues';
+import { ReactNativeFirebase } from '@react-native-firebase/app';
 
 interface IProps extends RouteComponentProps {
     signIn: (s: any) => void;
@@ -38,11 +38,11 @@ const LoginPage: FC<IProps> = props => {
     });
 
     useEffect(() => {
-        const autoLogin = async() => {
-            const [[,email], [,password]] = await AsyncStorage.multiGet(['@email', '@password']);
+        const autoLogin = async () => {
+            const [[, email], [, password]] = await AsyncStorage.multiGet(['@email', '@password']);
             const callback = () => props.history.push(ROUTES.DASHBOARD);
-            const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
-            if(email && password) {
+            const errorCallback = (error: ReactNativeFirebase.NativeFirebaseError) => Alert.alert(error.message);
+            if (email && password) {
                 props.signIn({ email, password, callback, errorCallback })
             }
         }
@@ -56,19 +56,17 @@ const LoginPage: FC<IProps> = props => {
     const onSubmit = (data: any) => {
         const { email, password, keepLoggedIn } = data;
         const callback = async () => {
-            if(keepLoggedIn) {
+            if (keepLoggedIn) {
                 await AsyncStorage.setItem('@email', email);
                 await AsyncStorage.setItem('@password', password);
             }
             return props.history.push(ROUTES.DASHBOARD);
         }
-        const errorCallback = (error: firebase.FirebaseError) => Alert.alert(error.message);
+        const errorCallback = (error: ReactNativeFirebase.NativeFirebaseError) => Alert.alert(error.message);
         props.signIn({ email, password, callback, errorCallback })
     }
 
     return (
-        <>
-            <Image style={styles.backgroundStyle} source={icons.background} />
             <KeyboardAvoidingView
                 style={styles.keyboardAvoidingViewStyle}
                 behavior="height">
@@ -91,7 +89,7 @@ const LoginPage: FC<IProps> = props => {
                                 </Button>
                             </View>
                             <Button variant={'secondary'} onPress={redirectToRegisterPage}>
-                                <Text.Header text={'register'} />
+                                <Text.Header variant='default' text={'register'} />
                             </Button>
                             <Button
                                 variant={'secondary'}
@@ -109,7 +107,6 @@ const LoginPage: FC<IProps> = props => {
                     </Layout>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </>
     );
 };
 
@@ -166,7 +163,7 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         alignSelf: 'center',
-        transform: [{translateY: -4}, {translateX: 10}]
+        transform: [{ translateY: -4 }, { translateX: 10 }]
     }
 });
 

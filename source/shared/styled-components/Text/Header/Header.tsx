@@ -2,11 +2,12 @@ import React, { FC } from 'react';
 import { AppRegistry, StyleSheet, Text, TextProps } from 'react-native';
 
 interface IProps {
-    text: string
+    text: string,
+    variant: 'default' | 'homepage'
 };
 
 const Header: FC<IProps & TextProps> = (props) => {
-    return <Text {...props} style={styles.default}>{props.text}</Text>
+    return <Text {...props} style={[styles.default, styles[props.variant]]}>{props.text}</Text>
 }
 
 const styles = StyleSheet.create({
@@ -14,6 +15,10 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: 'Baloo2-Bold',
         color: '#4D375D'
+    },
+    homepage: {
+        fontSize: 36,
+
     }
 });
 
