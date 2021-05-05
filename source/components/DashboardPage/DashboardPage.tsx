@@ -6,6 +6,7 @@ import Text from '../../shared/styled-components/Text/export';
 import Sidebar from '../Sidebar/Sidebar';
 import HomePage from '@components/HomePage/HomePage';
 import { createForegroundMessagesHandler } from '@actions/actions';
+import ChallengePopup from '@components/ChallengePopup/ChallengePopup';
 
 interface IProps extends RouteComponentProps { }
 
@@ -13,9 +14,9 @@ const DashboardPage: FC<IProps> = props => {
     const [sidebarShown, setSidebarShown] = useState(false);
     useEffect(() => {
         let unsubscribe;
-        const attachListener = async() => {
+        const attachListener = async () => {
             unsubscribe = await createForegroundMessagesHandler();
-        }; 
+        };
         attachListener();
         return unsubscribe;
     }, [])
@@ -26,7 +27,8 @@ const DashboardPage: FC<IProps> = props => {
 
     return (
         <>
-            <View style={{ width: '20%' }}>
+
+            <View style={{ width: '20%', marginTop: '5%' }}>
                 <Button
                     onPress={() => {
                         setSidebarShown(!sidebarShown);
@@ -41,6 +43,7 @@ const DashboardPage: FC<IProps> = props => {
                     <HomePage />
                 </View>
             </View>
+            {/* <ChallengePopup></ChallengePopup> */}
         </>
     );
 };

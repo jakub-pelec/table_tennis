@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         width: '100%',
-        height: 51
     },
     primary: {
         backgroundColor: '#C0E218',
@@ -26,7 +25,9 @@ const styles = StyleSheet.create({
         marginBottom: 2
     },
     secondary: {
-
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     }
 });
 

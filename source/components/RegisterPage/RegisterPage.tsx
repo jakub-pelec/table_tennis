@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, View } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import icons from '@assets/export';
 import Button from '@shared/styled-components/Button/Button';
 import Text from '@shared/styled-components/Text/export';
 import { RouteComponentProps } from 'react-router';
-import {createAccount} from '@actions/actions';
+import { createAccount } from '@actions/actions';
 import { useForm } from 'react-hook-form';
-import {registerSchema} from '@schemas/schemas';
-import {yupResolver} from '@hookform/resolvers/yup';
+import { registerSchema } from '@schemas/schemas';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Layout from '@shared/styled-components/Layout/Layout';
 import FormInput from '@shared/form-components/FormInput/FormInput';
 import { ROUTES } from '@constants/routes';
@@ -36,35 +36,49 @@ const RegisterPage: FC<IProps> = (props) => {
     });
 
     const onSubmit = (data: IFormState) => {
-        const {email, password, username} = data;
+        const { email, password, username } = data;
         const callback = () => props.history.push(ROUTES.DASHBOARD);
-        const errorCallback = (error: ReactNativeFirebase.NativeFirebaseError) => Alert.alert(error.message); 
-        props.createAccount({email, password, username, callback, errorCallback});
+        const errorCallback = (error: ReactNativeFirebase.NativeFirebaseError) => Alert.alert(error.message);
+        props.createAccount({ email, password, username, callback, errorCallback });
     }
 
     const returnToLoginPage = () => {
         return props.history.push(ROUTES.LOGIN);
     }
     return (
-            <ScrollView contentContainerStyle={styles.contentContainerStyle}
-                style={styles.scrollViewStyle}>
-                <Layout>
-                    <View style={[styles.flexCentered, styles.inputContainer]}>
-                        <View style={styles.gobackButton}>
-                            <Button variant={'secondary'} onPress={returnToLoginPage}><Text.Paragraph text={"go back"} /></Button>
-                        </View>
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='username' errorMessage={errors && errors.username && errors.username.message} placeholder='Username' />
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{secureTextEntry: true}} />
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='rePassword' errorMessage={errors && errors.rePassword && errors.rePassword.message} placeholder='Confirm password' innerProps={{secureTextEntry: true}} />
-                        <View style={[styles.flexCentered, styles.signInButtonContainer]}>
-                            <Button variant={'primary'} onPress={handleSubmit(onSubmit)}><Text.Button variant={'primary'} text={"register"} /></Button>
-                        </View>
-                        <Button variant={'secondary'} onPress={() => console.log("facebook clicked")}><Text.Paragraph text={"sign in with facebook"} /><Image style={styles.signIcons} source={icons.facebook_icon} /></Button>
-                        <Button variant={'secondary'} onPress={() => console.log("google clicked")}><Text.Paragraph text={"sign in with google"} /><Image style={styles.signIcons} source={icons.google_icon} /></Button>
+        <ScrollView contentContainerStyle={styles.contentContainerStyle}
+            style={styles.scrollViewStyle}>
+            <Layout>
+                <View style={[styles.flexCentered, styles.inputContainer]}>
+                    <View style={styles.gobackButton}>
+                        <Button variant={'secondary'} onPress={returnToLoginPage}><Text.Paragraph text={"go back"} /></Button>
                     </View>
-                </Layout>
-            </ScrollView>
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='username' errorMessage={errors && errors.username && errors.username.message} placeholder='Username' />
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='rePassword' errorMessage={errors && errors.rePassword && errors.rePassword.message} placeholder='Confirm password' innerProps={{ secureTextEntry: true }} />
+                    <View style={[styles.flexCentered, styles.signInButtonContainer]}>
+                        <Button variant={'primary'} onPress={handleSubmit(onSubmit)}><Text.Button variant={'primary'} text={"register"} /></Button>
+                    </View>
+                    <View style={styles.authButtons}>
+                        <Button
+                            variant={'secondary'}
+                            onPress={() => console.log('facebook clicked')}>
+                            <Text.Paragraph text={'sign in with facebook'} />
+                            <Image style={styles.signIcons} source={icons.facebook_icon} />
+                        </Button>
+                    </View>
+                    <View style={styles.authButtons}>
+                        <Button
+                            variant={'secondary'}
+                            onPress={() => console.log('google clicked')}>
+                            <Text.Paragraph text={'sign in with google'} />
+                            <Image style={styles.signIcons} source={icons.google_icon} />
+                        </Button>
+                    </View>
+                </View>
+            </Layout>
+        </ScrollView>
     )
 }
 
@@ -107,7 +121,11 @@ const styles = StyleSheet.create({
         marginBottom: '10%',
         marginTop: '10%',
         marginLeft: '12.5%'
+    },
+    authButtons: {
+        marginTop: '5%',
+        height: 51,
     }
 })
 
-export default connect(null, {createAccount})(RegisterPage)
+export default connect(null, { createAccount })(RegisterPage)

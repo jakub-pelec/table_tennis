@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     default: {
         fontSize: 36,
         color: '#2B2E4A',
-        fontFamily: 'Baloo2-Bold'
+        fontFamily: 'Baloo2-Bold',
     },
     username: {
         color: '#2B2E4A',

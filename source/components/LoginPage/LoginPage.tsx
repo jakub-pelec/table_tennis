@@ -67,36 +67,39 @@ const LoginPage: FC<IProps> = props => {
     }
 
     return (
-            <KeyboardAvoidingView
-                style={styles.keyboardAvoidingViewStyle}
-                behavior="height">
-                <ScrollView
-                    centerContent
-                    style={styles.scrollViewStyle}
-                    contentContainerStyle={styles.contentContainerStyle}>
-                    <Layout>
-                        <Image source={icons.logo} />
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
-                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
-                        <View style={styles.checkboxWithLabelContainer}>
-                            <Text.Paragraph text={'keep me logged in'}></Text.Paragraph>
-                            <FormCheckbox control={control} checkboxContainerStyle={styles.checkboxContainer} name='keepLoggedIn'></FormCheckbox>
-                        </View>
-                        <View style={styles.buttonsContainer}>
-                            <View style={styles.signInButtonContainer}>
-                                <Button variant={'primary'} onPress={handleSubmit(onSubmit)}>
-                                    <Text.Button variant={'primary'} text={'sign in'} />
-                                </Button>
-                            </View>
-                            <Button variant={'secondary'} onPress={redirectToRegisterPage}>
-                                <Text.Header variant='default' text={'register'} />
+        <KeyboardAvoidingView
+            style={styles.keyboardAvoidingViewStyle}
+            behavior="height">
+            <ScrollView
+                centerContent
+                style={styles.scrollViewStyle}
+                contentContainerStyle={styles.contentContainerStyle}>
+                <Layout>
+                    <Image source={icons.logo} />
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
+                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
+                    <View style={styles.checkboxWithLabelContainer}>
+                        <Text.Paragraph text={'keep me logged in'}></Text.Paragraph>
+                        <FormCheckbox control={control} checkboxContainerStyle={styles.checkboxContainer} name='keepLoggedIn'></FormCheckbox>
+                    </View>
+                    <View style={styles.buttonsContainer}>
+                        <View style={styles.signInButtonContainer}>
+                            <Button variant={'primary'} onPress={handleSubmit(onSubmit)}>
+                                <Text.Button variant={'primary'} text={'sign in'} />
                             </Button>
+                        </View>
+                        <Button variant={'secondary'} onPress={redirectToRegisterPage}>
+                            <Text.Header variant='default' text={'register'} />
+                        </Button>
+                        <View style={styles.authButtons}>
                             <Button
                                 variant={'secondary'}
                                 onPress={() => console.log('facebook clicked')}>
                                 <Text.Paragraph text={'sign in with facebook'} />
                                 <Image style={styles.signIcons} source={icons.facebook_icon} />
                             </Button>
+                        </View>
+                        <View style={styles.authButtons}>
                             <Button
                                 variant={'secondary'}
                                 onPress={() => console.log('google clicked')}>
@@ -104,9 +107,10 @@ const LoginPage: FC<IProps> = props => {
                                 <Image style={styles.signIcons} source={icons.google_icon} />
                             </Button>
                         </View>
-                    </Layout>
-                </ScrollView>
-            </KeyboardAvoidingView>
+                    </View>
+                </Layout>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -164,6 +168,10 @@ const styles = StyleSheet.create({
     checkboxContainer: {
         alignSelf: 'center',
         transform: [{ translateY: -4 }, { translateX: 10 }]
+    },
+    authButtons: {
+        marginTop: '5%',
+        height: 51,
     }
 });
 
