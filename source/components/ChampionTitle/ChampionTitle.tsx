@@ -6,25 +6,17 @@ import Text from '../../shared/styled-components/Text/export';
 
 
 interface IProps {
-    count: number,
     text: string,
     variant: 'homepage'
 }
 
 const ChampionTitle: FC<IProps> = (props) => {
 
-    const styling = () => {
-        return props.count >= 10 ? styles.crownCountStyle2Digit : styles.crownCountStyle1Digit
-    }
-
     return (
         <View style={[styles.default, styles[props.variant]]}>
             <View>
                 <View style={styles.crownStyle}>
-                    <Image source={icons.champion_title_crown} />
-                    <View style={styling()}>
-                        <Text.ChampionTitleText color={'#FFC93C'} variant={'crown'} text={String(props.count)} />
-                    </View>
+                    <Image style={{ width: 32, height: 32 }} source={icons.champion_title_crown} />
                 </View>
             </View>
             <Text.ChampionTitleText color={"black"} variant={'default'} text={props.text} />
@@ -48,7 +40,7 @@ const styles = StyleSheet.create({
     homepage: {
         backgroundColor: 'rgba(172,172,172,0.2)',
         borderRadius: 10,
-        marginBottom: '1%'
+        marginBottom: '2%'
     },
     arrowStyle: {
         position: 'absolute',
@@ -57,6 +49,7 @@ const styles = StyleSheet.create({
     },
     crownStyle: {
         marginRight: '5%',
+        marginLeft: '10%',
         overflow: 'hidden'
     },
     crownCountStyle1Digit: {
