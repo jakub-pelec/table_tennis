@@ -45,6 +45,11 @@ interface ISubscribeUsers {
 
 type IPostLoginAction = ISubscribeUsers & ISubscribeUserData;
 
+interface IChallengeParams {
+    from: string,
+    to: string
+}
+
 export const createAccount = ({email, password, username, callback, errorCallback}: ICreateAccountParams) => async(dispatch: Dispatch) => {
     try {
         const authStatus = await messaging.requestPermission();
@@ -78,7 +83,7 @@ export const signIn = ({email, password, callback, errorCallback}: ISignInParams
 
 export const createForegroundMessagesHandler = async() => {
     const unsubscribe = await messaging.onMessage(async(remoteMessage: FirebaseMessagingTypes.RemoteMessage): Promise<any> => {
-        Alert.alert(JSON.stringify(remoteMessage));
+        Alert.alert(remoteMessage.notification?.title || 'Placeholder title', remoteMessage.notification?.body || 'Placeholder body');
     });
     return unsubscribe;
 }
@@ -136,5 +141,16 @@ export const logout = ({callback, errorCallback}: IHandlers) => async(dispatch: 
         callback();
     } catch(e) {
         errorCallback(e);
+    }
+}
+
+export const createChallenge = async({from, to}: IChallengeParams) => {
+    try {
+        const response = await axios.post(createApiUrl(API_PATH.createChallenge), {from, to});
+        if(response.status === 200) {
+            console.log(`challenge created with id: ${response.data.challengeID}`);
+        }
+    } catch(e) {
+        console.log(e);
     }
 }

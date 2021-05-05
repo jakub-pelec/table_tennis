@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     },
     default: {
         paddingLeft: '10%',
-        marginTop: 30,
         fontSize: 16,
         width: '100%',
         height: 51,

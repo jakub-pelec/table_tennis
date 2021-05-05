@@ -76,8 +76,10 @@ const LoginPage: FC<IProps> = props => {
                 contentContainerStyle={styles.contentContainerStyle}>
                 <Layout>
                     <Image source={icons.logo} />
-                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
-                    <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
+                    <View style={styles.inputContainerWrapper}>
+                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
+                        <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
+                    </View>
                     <View style={styles.checkboxWithLabelContainer}>
                         <Text.Paragraph text={'keep me logged in'}></Text.Paragraph>
                         <FormCheckbox control={control} checkboxContainerStyle={styles.checkboxContainer} name='keepLoggedIn'></FormCheckbox>
@@ -172,6 +174,15 @@ const styles = StyleSheet.create({
     authButtons: {
         marginTop: '5%',
         height: 51,
+    },
+    inputContainerWrapper: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        height: '20%',
+        marginTop: '10%'
     }
 });
 

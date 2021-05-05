@@ -4,7 +4,7 @@ import { AppRegistry, StyleSheet, Text } from 'react-native';
 
 interface IProps {
     text: string,
-    variant: 'rating' | 'username' | 'score'
+    variant: 'rating' | 'username' | 'score' | 'ratingSmall'
 }
 
 const UsernameCardText: FC<IProps> = (props) => {
@@ -20,10 +20,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Baloo2-Bold',
     },
     username: {
+        fontSize: 24,
         color: '#2B2E4A',
     },
     rating: {
         color: '#09BF68',
+    },
+    ratingSmall: {
+        color: '#09BF68',
+        fontSize: 20
     },
     score: {
         fontSize: 24,

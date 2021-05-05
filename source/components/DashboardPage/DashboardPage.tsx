@@ -4,14 +4,15 @@ import { RouteComponentProps } from 'react-router';
 import Button from '../../shared/styled-components/Button/Button';
 import Text from '../../shared/styled-components/Text/export';
 import Sidebar from '../Sidebar/Sidebar';
-import HomePage from '@components/HomePage/HomePage';
+import UserCard from '@components/UserCard/UserCard';
 import { createForegroundMessagesHandler } from '@actions/actions';
 import ChallengePopup from '@components/ChallengePopup/ChallengePopup';
 
 interface IProps extends RouteComponentProps { }
 
 const DashboardPage: FC<IProps> = props => {
-    const [sidebarShown, setSidebarShown] = useState(false);
+    const [sidebarShown, setSidebarShown] = useState<boolean>(false);
+    const [open, togglePopup] = useState<boolean>(false);
     useEffect(() => {
         let unsubscribe;
         const attachListener = async () => {
@@ -27,8 +28,7 @@ const DashboardPage: FC<IProps> = props => {
 
     return (
         <>
-
-            <View style={{ width: '20%', marginTop: '5%' }}>
+            <View>
                 <Button
                     onPress={() => {
                         setSidebarShown(!sidebarShown);
@@ -37,26 +37,45 @@ const DashboardPage: FC<IProps> = props => {
                     <Text.Paragraph text="menu" />
                 </Button>
             </View>
-            <View>
+            <View style={styles.card}>
                 {sidebarShown && <Sidebar />}
                 <View style={styling()}>
-                    <HomePage />
+                    <View style={styles.userCardContainer}>
+                        <UserCard />
+                        <View style={styles.buttonContainer}>
+                            <Button variant='primary' onPress={() => togglePopup(true)}><Text.Button variant='homepage' text='challenge' /></Button>
+                            <Button variant='primary'><Text.Button variant='homepage' text='tournament' /></Button>
+                        </View>
+                    </View>
                 </View>
             </View>
-            {/* <ChallengePopup></ChallengePopup> */}
+            <ChallengePopup open={open} togglePopup={togglePopup} />
+
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    backgroundStyle: {
+    card: {
 
     },
+    default: {},
     showSidebar: {
         marginLeft: '20%',
         marginRight: 0,
     },
-    default: {},
+    buttonContainer: {
+        width: '75%',
+        height: '25%',
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        flexDirection: 'column',
+    },
+    userCardContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default DashboardPage;
