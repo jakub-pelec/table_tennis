@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     primary: {
         color: 'white',
         fontFamily: 'Baloo2-Bold',
-        fontSize: 24,
+        fontSize: 30,
     },
     secondary: {},
     homepage: {

@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     default: {
         fontSize: 16,
         color: '#4D375D',
-        fontFamily: 'Baloo2-Bold'
+        fontFamily: 'Baloo2-Bold',
+        textAlign: 'center'
     }
 });
 

@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {connect} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
 import { RouteComponentProps } from 'react-router';
 import Button from '../../shared/styled-components/Button/Button';
 import Text from '../../shared/styled-components/Text/export';
@@ -7,8 +8,11 @@ import Sidebar from '../Sidebar/Sidebar';
 import UserCard from '@components/UserCard/UserCard';
 import { createForegroundMessagesHandler } from '@actions/actions';
 import ChallengePopup from '@components/ChallengePopup/ChallengePopup';
+import ConfirmPopup from '@components/ConfirmPopup/ConfirmPopup';
 
-interface IProps extends RouteComponentProps { }
+interface IProps extends RouteComponentProps { 
+    createForegroundMessagesHandler: () => any
+}
 
 const DashboardPage: FC<IProps> = props => {
     const [sidebarShown, setSidebarShown] = useState<boolean>(false);
@@ -16,7 +20,7 @@ const DashboardPage: FC<IProps> = props => {
     useEffect(() => {
         let unsubscribe;
         const attachListener = async () => {
-            unsubscribe = await createForegroundMessagesHandler();
+            unsubscribe = await props.createForegroundMessagesHandler();
         };
         attachListener();
         return unsubscribe;
@@ -50,7 +54,7 @@ const DashboardPage: FC<IProps> = props => {
                 </View>
             </View>
             <ChallengePopup open={open} togglePopup={togglePopup} />
-
+            <ConfirmPopup />
         </>
     );
 };
@@ -78,4 +82,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DashboardPage;
+export default connect(null, {createForegroundMessagesHandler})(DashboardPage);

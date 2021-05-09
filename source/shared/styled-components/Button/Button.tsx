@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { AppRegistry, StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 interface IProps {
-    variant: 'primary' | 'secondary',
+    variant: 'primary' | 'secondary' | 'cancel',
     children: JSX.Element | JSX.Element[]
 };
 
@@ -22,12 +22,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#C0E218',
         color: '#ffffff',
         borderRadius: 5,
-        marginBottom: 2
     },
     secondary: {
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+    },
+    cancel: {
+        backgroundColor: 'red',
+        borderRadius: 5,
     }
 });
 
