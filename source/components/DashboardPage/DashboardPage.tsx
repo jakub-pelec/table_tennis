@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: APP_STATE) => ({
-    acceptedChallenges: state.fetch.liveGames.filter(element => element.accepted),
-    sentChallenges: state.fetch.liveGames.filter(element => element.from === state.auth.id)
+    acceptedChallenges: state.fetch.liveGames.filter(element => element.participants.includes(state.auth.id)),
 })
 
 export default connect(mapStateToProps, {createForegroundMessagesHandler})(DashboardPage);

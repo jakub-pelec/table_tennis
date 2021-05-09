@@ -195,7 +195,7 @@ const subscribeLiveGames = ({ id: ownId, dispatch }: ISubscribeUsers) => {
     try {
         const unsubscribe = firestore
             .collection(COLLECTIONS.LIVE_GAMES)
-            .where('from', '==', ownId)
+            .where('participants', 'array-contains', ownId)
             .onSnapshot((snapshot: FirebaseFirestoreTypes.QuerySnapshot) => {
                 const data: LiveGameDocument[] = [];
                 snapshot.docs.forEach(
@@ -207,6 +207,7 @@ const subscribeLiveGames = ({ id: ownId, dispatch }: ISubscribeUsers) => {
                 );
                 dispatch({ type: FETCH_LIVE_GAMES, payload: data });
             });
+            
         // dispatch({
         //     type: KEEP_UNSUBSCRIPTION_USERS,
         //     payload: unsubscribe.toString(),

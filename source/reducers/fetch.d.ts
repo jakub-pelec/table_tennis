@@ -13,7 +13,8 @@ export interface LiveGameDocument {
     },
     finished: boolean,
     accepted: boolean,
-    id: string
+    id: string,
+    participants: string[]
 }
 
 export declare type FETCH_STATE = typeof INITIAL_STATE;
