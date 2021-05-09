@@ -14,16 +14,17 @@ import {
     SUBSCRIBE,
     UNSUBSCRIBE,
     UNSUBSCRIBE_USERS,
+    FETCH_LIVE_GAMES
 } from './types';
 import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
 import { API_PATH } from '@constants/apiPaths';
 import { COLLECTIONS } from '@constants/collections';
-import { Alert } from 'react-native';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { APP_STATE } from '@typings/redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROUTES } from '@constants/routes';
+import { LiveGameDocument } from '@reducers/fetch';
 
 interface IHandlers {
     callback: (s?: any) => void;
@@ -92,6 +93,7 @@ export const createAccount = ({
             token,
         });
         if (response.status === 200) {
+            console.log(response.data);
             const firestoreID = response.data.firestoreID;
             postLoginAction({ id: firestoreID, dispatch });
             callback();
@@ -181,9 +183,35 @@ const subscribeUsers = ({ id: ownId, dispatch }: ISubscribeUsers) => {
     }
 };
 
+const subscribeLiveGames = ({ id: ownId, dispatch }: ISubscribeUsers) => {
+    try {
+        const unsubscribe = firestore
+            .collection(COLLECTIONS.LIVE_GAMES)
+            .where('from', '==', ownId)
+            .onSnapshot((snapshot: FirebaseFirestoreTypes.QuerySnapshot) => {
+                const data: LiveGameDocument[] = [];
+                snapshot.docs.forEach(
+                    (doc: FirebaseFirestoreTypes.DocumentSnapshot) => {
+                        const docData = doc.data() as LiveGameDocument;
+                        data.push(docData);
+                    },
+                );
+                dispatch({ type: FETCH_LIVE_GAMES, payload: data });
+            });
+        // dispatch({
+        //     type: KEEP_UNSUBSCRIPTION_USERS,
+        //     payload: unsubscribe.toString(),
+        // });
+    } catch (e) {
+        //TODO: handle error
+        console.log(e);
+    }
+};
+
 const postLoginAction = ({ id, dispatch }: IPostLoginAction) => {
     subscribeUserData({ id, dispatch });
     subscribeUsers({ id, dispatch });
+    subscribeLiveGames({id, dispatch});
     dispatch({ type: SIGN_IN, payload: id });
 };
 

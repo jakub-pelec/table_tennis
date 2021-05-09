@@ -91,9 +91,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state: APP_STATE) => ({
+const mapStateToProps = (state: APP_STATE) => {
+    console.log(state.fetch)
+    return ({
     users: state.users.allUsers,
     ownID: state.auth.id
-});
+})};
 
-export default connect(mapStateToProps,)(ChallengePopup);
+export default connect(mapStateToProps)(ChallengePopup);
