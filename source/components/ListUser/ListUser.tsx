@@ -13,10 +13,10 @@ const ListUser: FC<IProps> = (props) => {
     return (
         <View style={[styles.default, (props.selected && styles.selected)]}>
             <View style={styles.usernameContainer}>
-                <Text.UsernameCardText variant='username' text={props.username} />
+                <Text.Paragraph text={props.username} />
             </View>
             <View style={styles.ratingContainer}>
-                <Text.UsernameCardText variant='rating' text={String(props.rating)} />
+                <Text.UsernameCardText variant='ratingSmall' text={String(props.rating)} />
             </View>
         </View>
     )
@@ -24,8 +24,8 @@ const ListUser: FC<IProps> = (props) => {
 
 const styles = StyleSheet.create({
     default: {
-        width: '100%',
-        height: 64,
+        width: '90%',
+        height: 50,
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',

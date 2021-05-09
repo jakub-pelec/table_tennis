@@ -28,6 +28,7 @@ module.exports = {
       "@env": "./source/env/",
       "@reducers": "./source/reducers/"
     }
-  }]
+  }],
+  'react-native-reanimated/plugin'
   ]
 };

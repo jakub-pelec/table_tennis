@@ -6,6 +6,7 @@ import { Route, NativeRouter, Switch } from 'react-router-native';
 import { ROUTES } from '../../constants/routes';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import InGame from '../InGame/InGame';
 import icons from '@assets/export';
 
 interface IProps { };
@@ -19,6 +20,7 @@ const Router: FC<IProps> = () => {
                     <Route path={ROUTES.LOGIN} exact component={LoginPage} />
                     <Route path={ROUTES.REGISTER} exact component={RegisterPage} />
                     <Route path={ROUTES.DASHBOARD} exact component={DashboardPage} />
+                    <Route path={ROUTES.IN_GAME} exact component={InGame} />
                 </Switch>
             </NativeRouter>
         </>

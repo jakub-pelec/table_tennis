@@ -1,5 +1,6 @@
 export const ROUTES = {
     LOGIN: '/',
     REGISTER: '/register',
-    DASHBOARD: '/dashboard'
+    DASHBOARD: '/dashboard',
+    IN_GAME: '/in-game'
 }

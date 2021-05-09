@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { AppRegistry, StyleSheet, View } from 'react-native';
 import Text from '@shared/styled-components/Text/export';
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
     rating: number
 }
 
-const UsernameCard: FC<IProps> = (props) => {
+const UserDetails: FC<IProps> = (props) => {
     return (
         <View style={styles.mainContainer}>
             <Text.UsernameCardText variant="username" text={props.username} />
@@ -46,4 +46,6 @@ const styles = StyleSheet.create({
     }
 })
 
-export default UsernameCard;
+AppRegistry.registerComponent('userDetails', () => UserDetails);
+
+export default UserDetails;

@@ -53,10 +53,12 @@ const RegisterPage: FC<IProps> = (props) => {
                     <View style={styles.gobackButton}>
                         <Button variant={'secondary'} onPress={returnToLoginPage}><Text.Paragraph text={"go back"} /></Button>
                     </View>
+                    <View style={styles.inputContainerWrapper}>
                     <FormInput control={control} inputContainerStyle={styles.inputContainer} name='username' errorMessage={errors && errors.username && errors.username.message} placeholder='Username' />
                     <FormInput control={control} inputContainerStyle={styles.inputContainer} name='email' errorMessage={errors && errors.email && errors.email.message} placeholder='Email' />
                     <FormInput control={control} inputContainerStyle={styles.inputContainer} name='password' errorMessage={errors && errors.password && errors.password.message} placeholder='Password' innerProps={{ secureTextEntry: true }} />
                     <FormInput control={control} inputContainerStyle={styles.inputContainer} name='rePassword' errorMessage={errors && errors.rePassword && errors.rePassword.message} placeholder='Confirm password' innerProps={{ secureTextEntry: true }} />
+                    </View>
                     <View style={[styles.flexCentered, styles.signInButtonContainer]}>
                         <Button variant={'primary'} onPress={handleSubmit(onSubmit)}><Text.Button variant={'primary'} text={"register"} /></Button>
                     </View>
@@ -125,6 +127,16 @@ const styles = StyleSheet.create({
     authButtons: {
         marginTop: '5%',
         height: 51,
+    },
+    inputContainerWrapper: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        height: '45%',
+        marginTop: '10%',
+        marginVertical: '3%'
     }
 })
 
