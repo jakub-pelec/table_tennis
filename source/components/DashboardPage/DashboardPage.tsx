@@ -9,9 +9,14 @@ import UserCard from '@components/UserCard/UserCard';
 import { createForegroundMessagesHandler } from '@actions/actions';
 import ChallengePopup from '@components/ChallengePopup/ChallengePopup';
 import ConfirmPopup from '@components/ConfirmPopup/ConfirmPopup';
+import { APP_STATE } from '@typings/redux';
+import { ROUTES } from '@constants/routes';
+import { LiveGameDocument } from '@reducers/fetch';
 
 interface IProps extends RouteComponentProps { 
-    createForegroundMessagesHandler: () => any
+    createForegroundMessagesHandler: () => any,
+    acceptedChallenges: LiveGameDocument[],
+    sentChallenges: LiveGameDocument[]
 }
 
 const DashboardPage: FC<IProps> = props => {
@@ -24,7 +29,13 @@ const DashboardPage: FC<IProps> = props => {
         };
         attachListener();
         return unsubscribe;
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(props.acceptedChallenges.length + props.sentChallenges.length !== 0) {
+            props.history.push(ROUTES.IN_GAME);
+        }
+    }, [props.acceptedChallenges, props.sentChallenges]);
 
     const styling = () => {
         return sidebarShown === true ? styles.showSidebar : styles.default;
@@ -82,4 +93,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, {createForegroundMessagesHandler})(DashboardPage);
+const mapStateToProps = (state: APP_STATE) => ({
+    acceptedChallenges: state.fetch.liveGames.filter(element => element.accepted),
+    sentChallenges: state.fetch.liveGames.filter(element => element.from === state.auth.id)
+})
+
+export default connect(mapStateToProps, {createForegroundMessagesHandler})(DashboardPage);

@@ -11,7 +11,9 @@ export interface LiveGameDocument {
         winScore: number,
         loseScore: number
     },
-    finished: boolean
+    finished: boolean,
+    accepted: boolean,
+    id: string
 }
 
 export declare type FETCH_STATE = typeof INITIAL_STATE;

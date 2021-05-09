@@ -1,11 +1,19 @@
 import React, {FC, useEffect} from 'react';
+import {withRouter, RouteComponentProps} from 'react-router-native';
 import {AppRegistry, StyleSheet, View, Image} from 'react-native';
 import Text from '@shared/styled-components/Text/export';
 import icons from '@assets/export';
 import { DIMENSIONS } from '@constants/deviceValues';
 import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
+import Button from '@shared/styled-components/Button/Button';
+import {finishChallenge} from '@actions/actions';
+import {connect} from 'react-redux';
+import { APP_STATE } from '@typings/redux';
+import { LiveGameDocument } from '@reducers/fetch';
 
-interface IProps {}
+interface IProps extends RouteComponentProps {
+    currentGame: LiveGameDocument
+}
 
 const InGame: FC<IProps> = (props) => {
     const rotation = useSharedValue(0);
@@ -27,12 +35,21 @@ const InGame: FC<IProps> = (props) => {
           transform: [{ rotateZ: `${rotation.value}deg` }],
         };
       });
+
+    const handleChallangeFinish = () => {
+        const {id, from, to} = props.currentGame;
+        //TODO: replace with real data
+        finishChallenge({push: props.history.push, challengeID: id, winnerId: from, loserId: to})
+    }
     return (
         <View style={styles.default}>
             <Text.Header text='You are in game!' variant='homepage'/>
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
                 <Image style={styles.image} source={icons.ping_pong} />
             </Animated.View>
+            <View style={styles.buttonContainer}>
+                <Button variant='cancel' onPress={handleChallangeFinish}><Text.Button variant='homepage' text='finish game' /></Button>
+            </View>
         </View>
     )
 };
@@ -53,9 +70,18 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%'
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
 AppRegistry.registerComponent('ingame', () => InGame);
 
-export default InGame;
+const mapStateToProps = (state: APP_STATE) => ({
+    currentGame: state.fetch.liveGames[0]
+})
+
+export default connect(mapStateToProps)(withRouter(InGame));

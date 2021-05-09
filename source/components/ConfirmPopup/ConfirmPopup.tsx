@@ -19,11 +19,13 @@ interface IProps extends RouteComponentProps {
     title: string,
     body: string,
     payload: IChallengeMessage,
+    acceptChallenge: (s: any) => void,
+    rejectChallenge: (s: any) => void
 }
 
 const ConfirmPopup: FC<IProps> = (props) => {
-    const acceptHandler = () => acceptChallenge({push: props.history.push, id: props.payload.challengeID || ''});
-    const denyHandler = () => rejectChallenge({id: props.payload.challengeID || ''})
+    const acceptHandler = () => props.acceptChallenge({id: props.payload.challengeID || ''});
+    const denyHandler = () => props.rejectChallenge({id: props.payload.challengeID || ''})
     return (
         <Modal isVisible={props.open}>
             <View style={styles.card}>
@@ -83,4 +85,4 @@ const mapStateToProps = (state: APP_STATE) => ({
     payload: state.ui.popup.payload
 })
 
-export default withRouter(connect(mapStateToProps)(ConfirmPopup));
+export default withRouter(connect(mapStateToProps, {acceptChallenge, rejectChallenge})(ConfirmPopup));

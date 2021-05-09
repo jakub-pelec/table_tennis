@@ -14,7 +14,8 @@ import {
     SUBSCRIBE,
     UNSUBSCRIBE,
     UNSUBSCRIBE_USERS,
-    FETCH_LIVE_GAMES
+    FETCH_LIVE_GAMES,
+    HIDE_POPUP
 } from './types';
 import axios from 'axios';
 import { createApiUrl } from '../utils/createApiUrl';
@@ -67,6 +68,13 @@ interface IChallengeParams {
 interface IAcceptChallengeParams {
     push: (s: string) => void,
     id: string
+}
+
+interface IFinishChallengeParams {
+    challengeID: string,
+    winnerId: string,
+    loserId: string,
+    push: (s: string) => void
 }
 
 export const createAccount = ({
@@ -193,7 +201,8 @@ const subscribeLiveGames = ({ id: ownId, dispatch }: ISubscribeUsers) => {
                 snapshot.docs.forEach(
                     (doc: FirebaseFirestoreTypes.DocumentSnapshot) => {
                         const docData = doc.data() as LiveGameDocument;
-                        data.push(docData);
+                        const id = doc.id
+                        data.push({...docData, id});
                     },
                 );
                 dispatch({ type: FETCH_LIVE_GAMES, payload: data });
@@ -251,21 +260,34 @@ export const createChallenge = async ({ from, to }: IChallengeParams) => {
     }
 };
 
-export const acceptChallenge = async({ push, id }: IAcceptChallengeParams) => {
+export const acceptChallenge = ({ id }: {id: string}) => async(dispatch: Dispatch) => {
     try {
         await axios.post(createApiUrl(API_PATH.acceptChallenge), {challengeID: id});
-        return push(ROUTES.IN_GAME);
+        return dispatch({type: HIDE_POPUP});
     } catch(e) {
         //TODO: handle error
         console.log(e);
     } 
 }
 
-export const rejectChallenge = async({ id }: {id: string}) => {
+//TODO: Typings
+export const rejectChallenge = ({ id }: {id: string}) => async(dispatch: Dispatch) => {
     try {
-        return await axios.post(createApiUrl(API_PATH.rejectChallenge), {challengeID: id});
+        await axios.post(createApiUrl(API_PATH.rejectChallenge), {challengeID: id});
+        return dispatch({type: HIDE_POPUP});
     } catch(e) {
         //TODO: handle error
         console.log(e);
     } 
+}
+
+//TODO: Typings
+export const finishChallenge = async({challengeID, winnerId, loserId, push}: IFinishChallengeParams) => {
+    try {
+        await axios.post(createApiUrl(API_PATH.finishChallenge), {challengeID, winnerId, winnerNickname: 'test nickname winner', loserId, loserNickname: 'test nickname loser', loseScore: 0, winScore: 0});
+        return push(ROUTES.DASHBOARD);
+    } catch(e) {
+        //TODO: handle error
+        console.log('error', e)
+    }
 }
