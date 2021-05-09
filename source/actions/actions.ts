@@ -101,7 +101,6 @@ export const createAccount = ({
             token,
         });
         if (response.status === 200) {
-            console.log(response.data);
             const firestoreID = response.data.firestoreID;
             postLoginAction({ id: firestoreID, dispatch });
             callback();
@@ -135,7 +134,6 @@ export const createForegroundMessagesHandler = () => async (
         async (
             remoteMessage: FirebaseMessagingTypes.RemoteMessage,
         ): Promise<any> => {
-            console.log(remoteMessage);
             dispatch({
                 type: SHOW_POPUP,
                 payload: {
