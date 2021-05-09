@@ -32,7 +32,7 @@ const DashboardPage: FC<IProps> = props => {
     }, []);
 
     useEffect(() => {
-        if(props.acceptedChallenges.length + props.sentChallenges.length !== 0) {
+        if(props.acceptedChallenges.length) {
             props.history.push(ROUTES.IN_GAME);
         }
     }, [props.acceptedChallenges, props.sentChallenges]);
