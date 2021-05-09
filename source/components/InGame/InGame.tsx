@@ -10,12 +10,18 @@ import {finishChallenge} from '@actions/actions';
 import {connect} from 'react-redux';
 import { APP_STATE } from '@typings/redux';
 import { LiveGameDocument } from '@reducers/fetch';
+import { ROUTES } from '@constants/routes';
 
 interface IProps extends RouteComponentProps {
     currentGame: LiveGameDocument
 }
 
 const InGame: FC<IProps> = (props) => {
+    useEffect(() => {
+        if(!props.currentGame) {
+            return props.history.push(ROUTES.DASHBOARD);
+        }
+    }, [props.currentGame]);
     const rotation = useSharedValue(0);
     const animationTime = 500;
     const animationRepeat = 6;
