@@ -1,4 +1,4 @@
-import {SUBSCRIBE, UNSUBSCRIBE, KEEP_UNSUBSCRIPTION} from '@actions/types';
+import {SUBSCRIBE, UNSUBSCRIBE, KEEP_UNSUBSCRIPTION, FETCH_LIVE_GAMES} from '@actions/types';
 import { ActionWithPayload } from '@typings/redux';
 import {LiveGameDocument} from './fetch';
 
@@ -22,6 +22,8 @@ export default (state = INITIAL_STATE, action: ActionWithPayload<any>): typeof I
             return {...state, ...action.payload};
         case KEEP_UNSUBSCRIPTION:
             return {...state, unsubscribe: action.payload};
+        case FETCH_LIVE_GAMES:
+            return {...state, liveGames: action.payload};
         case UNSUBSCRIBE:
             return INITIAL_STATE;
         default:
